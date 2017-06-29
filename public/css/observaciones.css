@@ -1,0 +1,30 @@
+@CHARSET "UTF-8";
+.observacion { 
+	min-height: 20px;
+	background-color: #ffffff;
+	border: 1px solid #e3e3e3;
+	border-radius: 4px;
+	margin-bottom: 4px;
+	min-height: 64px;
+}
+.observacion .header {
+	padding: 15px 15px 5px 15px;
+	background-color: #f7f7f9;
+	float: left;
+	width: 100%;
+	margin-bottom: 15px;
+}
+.observacion .contenido {
+	padding: 15px;
+}
+.observacion .header .foto {
+	float: left;
+	margin-right: 5px; 
+	border: 1px solid #dddddd;
+	 border-radius: 4px;
+	 -webkit-transition: all 0.2s ease-in-out;
+	         transition: all 0.2s ease-in-out;
+}
+.observacion h3 {
+	font-size: 20px !important;
+}

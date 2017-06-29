@@ -1,0 +1,64 @@
+@CHARSET "UTF-8";
+.mensaje { 
+	min-height: 20px;
+	padding: 19px;
+	background-color: #ffffff;
+	border: 1px solid #e3e3e3;
+	border-radius: 4px 4px 0 0;
+}
+#mensajes, #anuncios {
+	margin-top: 10px;
+}
+.mensaje .header {
+	float: left;
+	width: 100%;
+	margin-bottom: 5px;
+}
+.comentarios {
+	background-color: #f7f7f9;
+	padding: 10px;
+	margin-bottom: 10px;
+	border-radius: 0 0 4px 4px;
+	border-left: 1px solid #e3e3e3;
+	border-right: 1px solid #e3e3e3;
+	border-bottom: 1px solid #e3e3e3;
+}
+.comentario {
+	margin-bottom: 5px;
+}
+.cant-comentarios {
+	float: left;
+	width: 100%;
+	margin-bottom: 5px;
+	cursor: pointer;
+}
+.comentario .foto {
+	float: left;
+	margin-right: 5px; 
+	border-radius: 4px;
+	 -webkit-transition: all 0.2s ease-in-out;
+	         transition: all 0.2s ease-in-out;
+}
+.comentario .texto {
+	padding-left: 30px;
+}
+.comentario .fecha {
+	color: #9197a3;
+	font-size: 12px;
+}
+.mensaje .header .foto {
+	float: left;
+	margin-right: 5px; 
+	border: 1px solid #dddddd;
+	 border-radius: 4px;
+	 -webkit-transition: all 0.2s ease-in-out;
+	         transition: all 0.2s ease-in-out;
+}
+#cont-users span {
+	margin-bottom: 5px;
+	margin-top: 5px;
+	margin-left: 2px;
+}
+#cont-users .glyphicon-remove {
+	cursor: pointer;
+}

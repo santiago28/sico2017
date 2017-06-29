@@ -1,0 +1,1 @@
+$("#reporte").tablesorter({sortList: [[0,0]], headers: { 1:{sorter: true}, 2:{sorter: true}, 3:{sorter: true}, 4:{sorter: true}, 5:{sorter: true}, 6:{sorter: true}, 7:{sorter: true}, 8:{sorter: true}, 9:{sorter: true}}});

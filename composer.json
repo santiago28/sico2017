@@ -1,0 +1,7 @@
+{
+    "require": {
+        "swiftmailer/swiftmailer": "@stable",
+	"phalcon/devtools": "dev-master"
+
+    }
+}

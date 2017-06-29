@@ -1,0 +1,117 @@
+@CHARSET "UTF-8";
+.center {
+	text-align: center;
+}
+.bold {
+	font-weight: bold;
+}
+#imprimir {
+    font-size: 12px;
+	font-weight: bold;	
+}
+#imprimir .fila {
+	width: 100%;
+	float: left;
+	border-bottom: 1px solid #000000;
+}
+#imprimir .col3e .col2da{
+	width: 30%;
+}
+#imprimir .fila div {
+	padding: 7px;
+}
+
+#imprimir .fila:last-child {
+	border-bottom: none;
+}
+
+#imprimir .colb div {
+	float: left;
+	border-right: 1px solid #000000;
+	font-size: 11px;
+	height: 5%;
+}
+#imprimir .colb2 div {
+	float: left;
+	border-right: 1px solid #000000;
+	font-size: 8px;
+	height: 30px;
+}
+
+#imprimir .colb2 div:last-child {
+	border: none;
+}
+
+#imprimir .colb div:last-child {
+	border: none;
+}
+
+#imprimir .col2 div {
+	width: 45%;
+	float: left;
+	border-right: 1px solid #000000;
+}
+
+#imprimir .col2 div:last-child {
+	border: none;
+}
+
+#imprimir .col3 div {
+	width: 30%;
+}
+
+#imprimir .col3e div:first-child {
+	width: 30%;
+}
+
+#imprimir .col3 div, #imprimir .col3e div {
+	float: left;
+	border-right: 1px solid #000000;
+}
+#imprimir .col3 div:last-child, #imprimir .col3e div:last-child {
+	border-right: none;
+	width: 30%;
+}
+#imprimir .seccion {
+  margin-bottom: 0px;
+  border: 1px solid #000000;
+  width: 100%;
+  margin-bottom: 5px;
+}
+
+#imprimir #totalizacion_asistencia .fila div {
+	width: 93%;
+	border-right: 1px solid #000000;
+}
+
+#imprimir #pie_pagina{
+  width: 100%;
+  margin-top: 50px;
+}
+
+#imprimir .paginacion {
+	width: 100%;
+	margin-top: 10px;
+	text-align: center;
+}
+
+#imprimir .observacion {
+	height: 200px;
+}
+
+@media print { 
+    #imprimir { display: block; visibility: visible; margin-right: 0.8cm; margin-left: 0.8cm; }
+    .navbar, .no-imprimir, footer, hr { display: none; visibility: hidden; }
+    #imprimir .encabezado { page-break-before: always; }
+    @page  
+    { 
+        /* this affects the margin in the printer settings */ 
+        margin-left: 0;
+        margin-bottom: 40px;
+        margin-right: 0;
+        margin-top: 40px;
+        padding: 0;
+    } 
+}
+
+/* Estilo del impreso */

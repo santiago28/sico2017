@@ -1,0 +1,125 @@
+server {
+    listen   80;
+    listen 842;
+    server_name localhost;
+    client_max_body_size 200M;
+    index index.php index.html index.htm;
+    set $root_path '/var/www';
+    root $root_path;
+
+    location / {
+    try_files $uri $uri/ /index.php;
+    }
+    location @sico {
+        rewrite ^/sico/public(.+)$ /sico/public/index.php?_url=$1 last;
+    }
+
+    location /sico/ {
+        index index.php;
+        if ($uri !~ ^/sico/public) {
+        rewrite ^/sico(.*)$ /sico/public$1;
+        }
+        try_files $uri $uri/ @sico;
+    }
+
+    location @ibc.backend {
+        rewrite ^/ibc/backend/web(.+)$ /ibc/backend/web/index.php?_url=$1 last;
+    }
+
+    location @ibc.frontend {
+        rewrite ^/ibc/frontend/web(.+)$ /ibc/frontend/web/index.php?_url=$1 last;
+    }
+
+    location /ibc/backend/ {
+        index index.php;
+        if ($uri !~ ^/ibc/backend/web) {
+        rewrite ^/ibc/backend(.*)$ /ibc/backend/web$1;
+        }
+        try_files $uri $uri/ @ibc.backend;
+    }
+
+    location /ibc/frontend/ {
+        index index.php;
+        if ($uri !~ ^/ibc/frontend/web) {
+        rewrite ^/ibc/frontend(.*)$ /ibc/frontend/web$1;
+        }
+        try_files $uri $uri/ @ibc.frontend;
+    }
+
+    location @sico2015 {
+        rewrite ^/sico2015/public(.+)$ /sico2015/public/index.php?_url=$1 last;
+    }
+
+    location /sico2015/ {
+        index index.php;
+        if ($uri !~ ^/sico2015/public) {
+        rewrite ^/sico2015(.*)$ /sico2015/public$1;
+        }
+        try_files $uri $uri/ @sico2015;
+    }
+
+    location @delfi {
+        rewrite ^/2016/delfi/public(.+)$ /2016/delfi/public/index.php?_url=$1 last;
+    }
+
+    location /2016/delfi/ {
+        index index.php;
+        if ($uri !~ ^/2016/delfi/public) {
+        rewrite ^/2016/delfi(.*)$ /2016/delfi/public$1;
+        }
+        try_files $uri $uri/ @delfi;
+    }
+
+    location ~ ^/owncloud/(?:\.htaccess|data|config|db_structure\.xml|README) {
+        deny all;
+        error_page 403 = /owncloud/core/templates/403.php;
+    }
+    location /owncloud/ {
+	index index.php;
+	error_page 403 = /owncloud/core/templates/403.php;
+        error_page 404 = /owncloud/core/templates/404.php;
+ 
+        rewrite ^/owncloud/caldav(.*)$ /remote.php/caldav$1 redirect;
+        rewrite ^/owncloud/carddav(.*)$ /remote.php/carddav$1 redirect;
+        rewrite ^/owncloud/webdav(.*)$ /remote.php/webdav$1 redirect;
+ 
+        rewrite ^(/owncloud/core/doc[^\/]+/)$ $1/index.html;
+ 
+        # The following rules are only needed with webfinger
+        rewrite ^/owncloud/.well-known/host-meta /public.php?service=host-meta last;
+        rewrite ^/owncloud/.well-known/host-meta.json /public.php?service=host-meta-json last;
+        rewrite ^/owncloud/.well-known/carddav /remote.php/carddav/ redirect;
+        rewrite ^/owncloud/.well-known/caldav /remote.php/caldav/ redirect;
+ 
+        try_files $uri $uri/ index.php;
+	
+	location ~ \.php(?:$|/) {
+        	fastcgi_split_path_info ^(.+\.php)(/.+)$;
+		include fastcgi_params;
+		fastcgi_index /owncloud/index.php;
+   		fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+   		fastcgi_param PATH_INFO $fastcgi_path_info;
+		fastcgi_pass 127.0.0.1:9001;
+ 		fastcgi_param HTTPS off;
+    	}
+
+    }    
+
+    location ~ \.php$ {
+        try_files $uri =404;
+	fastcgi_read_timeout 3600;
+        fastcgi_split_path_info ^(.+\.php)(/.+)$;
+        fastcgi_pass 127.0.0.1:9001;
+        fastcgi_index index.php;
+        fastcgi_param  SCRIPT_FILENAME  $document_root$fastcgi_script_name;
+        include fastcgi_params;
+    }
+
+    location ~* ^/(css|img|js|flv|swf|download)/(.+)$ {
+    root $root_path;
+    }
+
+    location ~ /\.ht {
+    deny all;
+    }
+}
