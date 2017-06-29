@@ -272,23 +272,20 @@ class CobPeriodoController extends ControllerBase
      * Rutea desde otro recorrido
      *
      */
-    public function ruteodesdeotroguardarAction($id_periodo, $recorrido)
+	public function ruteodesdeotroguardarAction($id_periodo, $recorrido)
     {
-
     	if (!$this->request->isPost()) {
     		return $this->response->redirect("rutear/$id_periodo/$recorrido");
     	}
     	$id_periodo_actualizar = $this->request->getPost("id_periodo_actualizar");
     	$recorrido_actualizar = $this->request->getPost("recorrido_actualizar");
     	$cob_periodo = CobPeriodo::findFirstByid_periodo($id_periodo_actualizar);
-
-	//if comentado ya que el tipo del periodo ya no es necesario 20/06/2017	
-    	/* if($cob_periodo->tipo == 2){
-    		$actas = CobActamuestreo::find(array(
+    	/*if($cob_periodo->tipo == 2){
+    		$actas = CobActaconteo::find(array(
     				"id_periodo = $id_periodo_actualizar AND recorrido = $recorrido_actualizar",
-    				"group" => "id_actamuestreo"
+    				"group" => "id_actaconteo"
     		));
-    		$tabla_acta = "cob_actamuestreo";
+    		$tabla_acta = "cob_actaconteo";
     	} else {
     		$actas = CobActaconteo::find(array(
     				"id_periodo = $id_periodo_actualizar AND recorrido = $recorrido_actualizar",
@@ -297,12 +294,11 @@ class CobPeriodoController extends ControllerBase
     		$tabla_acta = "cob_actaconteo";
     	}*/
 
-
-	    	$actas = CobActaconteo::find(array(
+		$actas = CobActaconteo::find(array(
     				"id_periodo = $id_periodo_actualizar AND recorrido = $recorrido_actualizar",
     				"group" => "id_actaconteo"
-    		));
-    		$tabla_acta = "cob_actaconteo";
+    	));
+    	$tabla_acta = "cob_actaconteo";
 
 
     	if (!$cob_periodo) {
@@ -316,11 +312,14 @@ class CobPeriodoController extends ControllerBase
     	$db = $this->getDI()->getDb();
     	foreach($actas as $row){
     		$id_usuario = $row->id_usuario;
+            $id_periodo1 = $row->id_periodo;
     		$id_contrato = $row->id_contrato;
     		$id_sede = $row->id_sede;
-    		$query = $db->execute("UPDATE $tabla_acta SET id_usuario = $id_usuario WHERE id_periodo = $id_periodo AND recorrido = $recorrido AND id_contrato = $id_contrato AND id_sede = $id_sede");
+    		$query = $db->execute("UPDATE cob_actaconteo SET id_usuario = $id_usuario WHERE id_periodo=$id_periodo AND recorrido = $recorrido AND id_contrato = $id_contrato AND id_sede = $id_sede");
     	}
-    	$this->flash->success("El ruteo fue actualizado exitosamente");
+    	//$this->flash->success("El ruteo fue actualizado exitosamente");
+	    $this->flash->success("$id_periodo_actualizar,$recorrido_actualizar ");
+
     	return $this->response->redirect("cob_periodo/rutear/$id_periodo/$recorrido");
     }
 
@@ -377,7 +376,7 @@ class CobPeriodoController extends ControllerBase
     	}
     	$this->view->id_periodo = $cob_periodo->id_periodo;
 		// Comentado por Daniel Gallo 27/02/2017 16:53
-        /*if($cob_periodo->tipo == 2) { 
+        /*if($cob_periodo->tipo == 2) {
     		$recorridos = CobActamuestreo::find(array(
     				"id_periodo = $id_periodo",
     				"group" => "recorrido"
@@ -389,7 +388,7 @@ class CobPeriodoController extends ControllerBase
     				"group" => "recorrido"
     		));
         $this->view->fecha_corte = $this->conversiones->fecha(3, $cob_periodo->fecha);
-		if($cob_periodo->tipo == 2) { // Si el tipo de periodo es entorno familiar en modalidades solo trae ENTORNO FAMILIAR 
+		if($cob_periodo->tipo == 2) { // Si el tipo de periodo es entorno familiar en modalidades solo trae ENTORNO FAMILIAR
         	$modalidades = BcModalidad::find(array(
 				"id_modalidad = 5"
 			));
@@ -474,7 +473,7 @@ class CobPeriodoController extends ControllerBase
         	$this->flash->error("La carga no existe");
         	return $this->response->redirect("cob_periodo/nuevorecorrido1/$id_periodo");
         }
-		// Daniel Gallo 27/02/2017 17:00 se comenta donde el tipo sea entorno familiar 
+		// Daniel Gallo 27/02/2017 17:00 se comenta donde el tipo sea entorno familiar
         /*if($cob_periodo->tipo == 2) {
           $actas = CobActamuestreo::generarActasRcarga($cob_periodo, $carga, 0);
           if($actas){
@@ -513,7 +512,7 @@ class CobPeriodoController extends ControllerBase
     		$this->flash->error("La carga no existe");
     		return $this->response->redirect("cob_periodo/nuevorecorrido/$id_periodo");
     	}
-		// Daniel Gallo 27/02/2017 17:00 se comenta donde el tipo sea entorno familiar 
+		// Daniel Gallo 27/02/2017 17:00 se comenta donde el tipo sea entorno familiar
       /*if($cob_periodo->tipo == 2) {
         $recorridos = CobActamuestreo::find(array(
             "id_periodo = $id_periodo",
