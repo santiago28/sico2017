@@ -1,4 +1,4 @@
 
 {{ content() }}
 {{ elements.getActamenu(acta) }}
-{{ acta_html }} 
+{{ acta_html }}

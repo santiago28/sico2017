@@ -460,7 +460,7 @@ class Elements extends Component
     		$this->_actaMenu['seguimiento'] = array('caption' => 'Seguimiento Empleados', 'action' => 'seguimientoitinerante', 'icon' => 'glyphicon-th-list');
     	}
 			if( $acta->id_modalidad == 5){
-    		$this->_actaMenu['cargaractas'] = array('caption' => 'Cargar Actas', 'action' => 'cargaractas', 'icon' => 'glyphicon-plus');
+    		$this->_actaMenu['cargaractas'] = array('caption' => 'Cargar Actas', 'action' => 'cargaractas', 'icon' => 'glyphicon-plus');					
     	}
     	foreach ($this->_actaMenu as $menu) {
     		$action = $menu['action'];
