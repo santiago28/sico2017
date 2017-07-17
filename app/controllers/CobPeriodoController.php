@@ -443,7 +443,6 @@ class CobPeriodoController extends ControllerBase
     	$cob_periodo = new CobPeriodo();
     	$cob_periodo->fecha = $this->conversiones->fecha(1, $this->request->getPost("fecha"));
     	$cob_periodo->tipo = $this->request->getPost("tipo");
-
 		$cob_periodo->descripcion= $this->request->getPost("descripcion");
     	if (!$cob_periodo->save()) {
     		foreach ($cob_periodo->getMessages() as $message) {
