@@ -14,6 +14,7 @@ class CobPeriodo extends \Phalcon\Mvc\Model
      * @var string
      */
     public $fecha;
+	public $descripcion;
 
     public function initialize()
     {
@@ -82,6 +83,55 @@ class CobPeriodo extends \Phalcon\Mvc\Model
     		return "General";
     	} else if($this->tipo == 2) {
     		return "Entorno Familiar";
+    	} else if($this->tipo == 3) {
+    		return "Entorno Comunitario";
+    	} else if($this->tipo == 4) {
+    		return "Entorno Comunitario Itinerante";
+    	} else if($this->tipo == 5) {
+    		return "Jardines Infantiles";
+    	} else if($this->tipo == 6) {
+    		return "Alistamiento";
+    	}
+    }
+
+	public function getDescripcionperiodoDetail()
+	 {
+
+    	if($this->tipo == 1) {
+
+		// Executing with bound parameters
+
+		$phql = $this->modelsManager->createQuery("SELECT descripcion FROM CobPeriodo WHERE id_periodo = :id_periodo:");
+
+		$rows= $phql->execute(
+			array(
+			'id_periodo' => "$this->id_periodo"
+			)
+		);
+		$modalidad="";
+
+		foreach ($rows as $row ) {
+					$modalidad = $row->descripcion;
+				}
+
+		return $modalidad;
+
+		} else if($this->tipo == 2) {
+
+		$phql = $this->modelsManager->createQuery("SELECT descripcion FROM CobPeriodo WHERE id_periodo = :id_periodo:");
+
+		$rows= $phql->execute(
+			array(
+			'id_periodo' => "$this->id_periodo"
+			)
+		);
+		$modalidad="";
+
+		foreach ($rows as $row ) {
+					$modalidad = $row->descripcion;
+		}
+
+    		return $modalidad;
     	} else if($this->tipo == 3) {
     		return "Entorno Comunitario";
     	} else if($this->tipo == 4) {

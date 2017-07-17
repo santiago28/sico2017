@@ -30,6 +30,7 @@
             <th>Periodo</th>
             <th>Fecha de Corte</th>
             <th>Tipo</th>
+            <th>Descripcion</th>
             {% if (nivel <= 1) %}
             <th>Reporte Contratos</th>
             <th>Reporte Sedes</th>
@@ -45,6 +46,7 @@
             <td>{{ link_to("cob_periodo/ver/"~cob_periodo.id_periodo, cob_periodo.getFechaDetail()) }}</td>
             <td>{{ link_to("cob_periodo/ver/"~cob_periodo.id_periodo, cob_periodo.fecha) }}</td>
             <td>{{ cob_periodo.getTipoperiodoDetail() }}</td>
+            <td>{{ cob_periodo.getDescripcionperiodoDetail()}}</td>
             {% if (nivel <= 1) %}
             <td>{{ link_to("bc_reporte/cob_contratos/"~cob_periodo.id_periodo~"/"~cob_periodo.tipo, '<i class="glyphicon glyphicon-book"></i> ', "rel": "tooltip", "title":"Reporte Contratos") }}</td>
             <td>{{ link_to("bc_reporte/cob_sedes/"~cob_periodo.id_periodo~"/"~cob_periodo.tipo, '<i class="glyphicon glyphicon-file"></i> ', "rel": "tooltip", "title":"Reporte Sedes") }}</td>

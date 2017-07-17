@@ -13,8 +13,45 @@
 					<option value="4">Entorno Comunitario Itinerante</option>
 					<option value="5">Jardines Infantiles</option>
 			</select>
-        </div>
+		</div>
     </div>
+	
+	<div class="form-group" id="modalidad">
+			<label class="col-sm-2 control-label" for="tipo">Modalidad</label>
+			<div class="col-sm-10">
+				<div class="radio-inline">
+				  <label><input type="radio" name="descripcion" value="INSTITUCIONAL 8 HORAS">I8H</label>
+				</div>
+				<div class="radio-inline">
+				  <label><input type="radio" class="observacion" name="descripcion" value="ENTORNO FAMILIAR">EF</label>
+				</div>
+				<div class="radio-inline">
+				  <label><input type="radio" class="observacion" name="descripcion" value="LUDOTEKAS">LDK</label>
+				</div>
+				<div class="radio-inline">
+				  <label><input type="radio" class="observacion" name="descripcion" value="JARDINES INFANTILES">JI</label>
+				</div>
+				<div class="radio-inline">
+				  <label><input type="radio" class="observacion" name="descripcion" value="PRESUPUESTO PARTICIPATIVO">PP</label>
+				</div>
+				<div class="radio-inline">
+				  <label><input type="radio" class="observacion" name="descripcion" value="SALA CUNAS 8 HORAS">SC8H</label>
+				</div>
+			</div>
+		</div>
+
+		<div class="form-group" id="prestador">
+			<label class="col-sm-2 control-label" for="tipo">Prestador</label>
+			<div class="col-sm-10">
+				<div class="radio-inline">
+				  <label><input type="radio" class="observacion" name="descripcion" value="CORINGE Y PRESENCIA">Coringe y Presencia</label>
+				</div>
+				<div class="radio-inline">
+				  <label><input type="radio" class="observacion" name="descripcion" value="METROSALUD">Metrosalud</label>
+				</div>
+			</div>
+		</div>			
+	
     <div class="form-group">
         <label class="col-sm-2 control-label" for="fecha">Fecha</label>
         <div class="col-sm-10">
@@ -27,3 +64,27 @@
     </div>
 </div>
 </form>
+<script>
+	setTimeout(function(){
+		$("#prestador").css("display", "none");
+		$("#modalidad").css("display", "block");
+		
+		$("#tipo").change(function(){
+			$(".observacion").removeAttr('checked');
+			var tipo = $(this).val();
+			if(tipo == 1){
+				$("#modalidad").css("display", "block");
+				$("#prestador").css("display", "none");
+			}else{
+				if(tipo == 2)
+				{
+					$("#prestador").css("display", "block");
+					$("#modalidad").css("display", "none");
+				}else{
+					$("#prestador").css("display", "none");
+					$("#modalidad").css("display", "none");
+				}
+			}
+		});
+	});
+</script>
