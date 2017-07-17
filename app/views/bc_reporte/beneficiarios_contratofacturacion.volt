@@ -1,9 +1,9 @@
 
 {{ content() }}
 <h1>Base de Datos Niño a Niño Consolidado Final {{ periodo.getFechaAnioDetail() }} <br><small>CONTRATO {{ contrato.id_contrato }} MODALIDAD {{ contrato.BcSedeContrato.modalidad_nombre }}</small></h1>
-{{ link_to("bc_reporte/oferente_periodos/"~contrato.id_contrato, '<i class="glyphicon glyphicon-chevron-left"></i> Regresar', "class": "btn btn-primary menu-tab") }}
-<div style='float:right; margin-right:-2%;'>
-	<button class='btn btn-primary' id='ExportarExcel'>Exportar</button>
+<div class='col-md-10'>
+	{{ link_to("bc_reporte/oferente_periodos/"~contrato.id_contrato, '<i class="glyphicon glyphicon-chevron-left"></i> Regresar', "class": "btn btn-primary menu-tab") }}
+  <button class='btn btn-primary' id='ExportarExcel'>Exportar</button>
 </div>
 <table class="table table-bordered table-hover">
 	<thead>
@@ -62,7 +62,7 @@
 					"Certificación Facturación": "{{ beneficiario.getCertificacionFacturacion() }}"
 				})
 			{% endfor %}
-			alasql('SELECT * INTO XLSX("Reporte.xlsx",{headers:true}) FROM ?', [Export]);
+			alasql('SELECT * INTO XLSX("Reporte Niño a Niño de Facturación.xlsx",{headers:true}) FROM ?', [Export]);
 		});
 	}, 1000);
 

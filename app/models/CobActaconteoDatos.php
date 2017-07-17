@@ -74,7 +74,7 @@ class CobActaconteoDatos extends \Phalcon\Mvc\Model
      * @var integer
      */
     public $mosaicoFisico;
-    
+
     /**
      *
      * @var string
@@ -104,4 +104,16 @@ class CobActaconteoDatos extends \Phalcon\Mvc\Model
      * @var string
      */
     public $gestionTelefonica;
+
+    /**
+     *
+     * @var string
+     */
+    public $tipoEncuentro;
+
+    /**
+     *
+     * @var integer
+     */
+    public $gruposVisitados;
 }

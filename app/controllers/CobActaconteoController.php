@@ -97,6 +97,7 @@ class CobActaconteoController extends ControllerBase
 			$this->view->sino = $this->elements->getSelect("sinona");
 			$this->view->estadoVisita = $this->elements->getSelect("estadoVisita");
 			$this->view->numeroEncuentos = $this->elements->getSelect("numeroEncuentos");
+			$this->view->tipo_encuentro = $this->elements->getSelect("tipoencuentro");
 			if($acta->CobActaconteoDatos){
 				$this->tag->setDefault("fecha", $this->conversiones->fecha(2, $acta->CobActaconteoDatos->fecha));
 				$this->tag->setDefault("horaInicio", $acta->CobActaconteoDatos->horaInicio);
@@ -116,6 +117,8 @@ class CobActaconteoController extends ControllerBase
 					$this->tag->setDefault("nombreSede", $acta->CobActaconteoDatos->nombreSede);
 					$this->tag->setDefault("mosaicoSanitario", $acta->CobActaconteoDatos->mosaicoSanitario);
 					$this->tag->setDefault("mosaicoSeguridad", $acta->CobActaconteoDatos->mosaicoSeguridad);
+					$this->tag->setDefault("mosaicoEncuentro", $acta->CobActaconteoDatos->tipoEncuentro);
+					$this->tag->setDefault("gruposVisitados", $acta->CobActaconteoDatos->gruposVisitados);
 				}
 			}
 			$this->view->acta = $acta;
@@ -171,6 +174,8 @@ class CobActaconteoController extends ControllerBase
 			$dato->nombreSede       = $this->request->getPost("nombreSede");
 			$dato->mosaicoSanitario = $this->request->getPost("mosaicoSanitario");
 			$dato->mosaicoSeguridad = $this->request->getPost("mosaicoSeguridad");
+			$dato->gruposVisitados = $this->request->getPost("gruposVisitados");
+			$dato->tipoEncuentro = $this->request->getPost("mosaicoEncuentro");
 		}
 
 		if (!$dato->save()) {

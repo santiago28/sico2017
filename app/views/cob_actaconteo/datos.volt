@@ -111,7 +111,7 @@
                 {{ text_field("nombreSede", "placeholder" : "Nombre de la sede donde prestó el servicio", "class" : "form-control required hidden servicio", "disabled" : "disabled") }}
         </div>
     </div>
-    <div class="form-group">
+    <!--<div class="form-group">
         <label class="col-sm-2 control-label" for="mosaicoSanitario">* Cuenta con servicio sanitario, lavamanos, energía eléctrica y agua potable</label>
         <div class="col-sm-10">
                 {{ select("mosaicoSanitario", sino, "class" : "form-control required") }}
@@ -122,7 +122,20 @@
         <div class="col-sm-10">
                 {{ select("mosaicoSeguridad", sino, "class" : "form-control required") }}
         </div>
+    </div>-->
+		<div class="form-group">
+        <label class="col-sm-2 control-label" for="mosaicoEncuentro" placeholder="Plan de Ordenamiento Territorial">El encuentro se realizó</label>
+        <div class="col-sm-10">
+                {{ select("mosaicoEncuentro", tipo_encuentro, "class" : "form-control required") }}
+        </div>
     </div>
+		<div class="form-group">
+        <label class="col-sm-2 control-label" for="gruposVisitados">* Cantidad de grupos visitados</label>
+        <div class="col-sm-10">
+                {{ text_field("gruposVisitados", "class" : "form-control required grupos") }}
+        </div>
+    </div>
+
     {% endif %}
     <div class="form-group">
         <label class="col-sm-2 control-label" for="vallaClasificacion">* Valla de Identificación</label>
@@ -136,10 +149,11 @@
                 {{ text_field("correccionDireccion", "class" : "form-control") }}
         </div>
     </div>
+		{% if(periodo_tipo != 2) %}
     <div class="form-group">
         <label class="col-sm-2 control-label" for="mosaicoFisico">* Cuenta con Registro Fotográfico Físico</label>
         <div class="col-sm-10">
-                {{ select("mosaicoFisico", sino, "class" : "form-control required") }}
+                {{ select("mosaicoFisico", sino, "class" : "form-control required	") }}
         </div>
     </div>
     <div class="form-group">
@@ -148,6 +162,7 @@
                 {{ select("mosaicoDigital", sino, "class" : "form-control required") }}
         </div>
     </div>
+		{% endif %}
     <div class="form-group">
         <label class="col-sm-2 control-label" for="observacionUsuario">Observación Interventor</label>
         <div class="col-sm-10">
@@ -186,3 +201,14 @@
     </div>
 </div>
 </form>
+<script>
+setTimeout(function(){
+	$(document).ready(function(){
+		$("#fecha").datepicker({
+      language: 'es',
+      autoclose: true,
+    });
+		document.getElementsByClassName("grupos")[0].setAttribute("type", "number");
+	});
+	},1000);
+</script>

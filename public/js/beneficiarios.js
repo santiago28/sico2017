@@ -14,7 +14,7 @@ $('.asistencia').each(function() {
 			$(this).parent().parent().find(".excusa").removeClass("required");
 		}
 	}
-	else 
+	else
 	{
 		if( asistencia == 4 || asistencia == 5 || asistencia == 6 ) {
 			$(this).parent().parent().find(".excusa").removeClass("hidden");
@@ -46,7 +46,7 @@ $('.asistencia').change(function() {
 			$(this).parent().parent().find(".excusa").removeClass("required").addClass("hidden");
 		}
 	}
-	else 
+	else
 	{
 		if( asistencia == 4 || asistencia == 5 || asistencia == 6 ) {
 			if( asistencia == 4 )
@@ -81,5 +81,5 @@ $("#boton_duplicar").click(function() {
 	});
 });
 $(".sel-todos").click(function() {
-	$('.modal-body input:checkbox').attr('checked', true); 
+	$('.modal-body input:checkbox').attr('checked', true);
 });
