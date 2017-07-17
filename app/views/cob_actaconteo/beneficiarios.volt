@@ -14,7 +14,7 @@
 		        <div class="col-sm-10">
 		                {{ text_field("fecha", "type" : "date", "class" : "form-control fecha_duplicar", "placeholder" : "dd/mm/aaaa", "data-date-format" : "dd/mm/yyyy") }}
 		        </div>
-		    </div>	    
+		    </div>
       		<div class="form-group">
 		        <label class="col-sm-2 control-label" for="modalidad">Grupos</label>
 		        <div class="col-sm-10">
@@ -52,7 +52,7 @@
     </thead>
     <tbody>
     {% if(periodo_tipo != 2) %}
-        {% for beneficiario in beneficiarios %}  
+        {% for beneficiario in beneficiarios %}
       {% set nombre = {beneficiario.primerNombre, beneficiario.segundoNombre, beneficiario.primerApellido, beneficiario.segundoApellido} %}
       <?php $fecha = $this->conversiones->fecha(2, $beneficiario->fechaInterventoria); ?>
             <tr<?php echo $beneficiario->getAsistenciaDetail(); ?>>
@@ -81,7 +81,7 @@
             </tr>
         {% endfor %}
     {% else %}
-        {% for beneficiario in beneficiarios %}  
+        {% for beneficiario in beneficiarios %}
       {% set nombre = {beneficiario.primerNombre, beneficiario.segundoNombre, beneficiario.primerApellido, beneficiario.segundoApellido} %}
       <?php $fecha = $this->conversiones->fecha(2, $beneficiario->fechaInterventoria); ?>
             <tr<?php echo $beneficiario->getAsistenciaDetail2(); ?>>
@@ -91,16 +91,16 @@
                 <td><div class='hide id_grupo'>{{ beneficiario.id_grupo }}</div>{{ beneficiario.grupo }}</td>
                 <td><input type="hidden" name="id_actaconteo_persona[]" value="{{ beneficiario.id_actaconteo_persona }}">{{ select("asistencia[]", asistenciaEC, "value" : beneficiario.asistencia, "class" : "form-control asistencia required") }}</td>
                 <td>
-                <?php if($beneficiario->asistencia == 4 || $beneficiario->asistencia == 5 || $beneficiario->asistencia == 6){ ?>
+                <?php if($beneficiario->asistencia == 4 || $beneficiario->asistencia == 5 || $beneficiario->asistencia == 6 || $beneficiario->asistencia == 7){ ?>
                   <?php $fecha_excusa = $this->conversiones->fecha(2, $beneficiario->CobActaconteoPersonaExcusa->fecha); ?>
                   <input type="hidden" class="excusa" name="id_actaconteo_persona2[]" value="{{ beneficiario.id_actaconteo_persona }}">
-                  <?php if($beneficiario->asistencia == 4) { ?>
+                  <?php if($beneficiario->asistencia == 4 || $beneficiario->asistencia == 7) { ?>
                     {{ text_field("motivo[]", "placeholder" : "Motivo", "class" : "form-control excusa", "value" : beneficiario.CobActaconteoPersonaExcusa.motivo) }}
                   <?php } else { ?>
                     {{ text_field("motivo[]", "placeholder" : "Gestión Telefónica", "class" : "form-control excusa", "value" : beneficiario.CobActaconteoPersonaExcusa.motivo) }}
                   <?php } ?>
                   {{ text_field("fecha_excusa[]", "type" : "date", "class" : "form-control tipo-fecha excusa", "placeholder" : "Fecha: dd/mm/aaaa", "parsley-type" : "dateIso", "data-date-format" : "dd/mm/yyyy", "value" : fecha_excusa) }}
-                  <?php if($beneficiario->asistencia == 4) { ?>
+                  <?php if($beneficiario->asistencia == 4 || $beneficiario->asistencia == 7) { ?>
                     {{ text_field("profesional[]", "placeholder" : "Profesional", "class" : "form-control excusa", "value" : beneficiario.CobActaconteoPersonaExcusa.profesional) }}
                   <?php } else { ?>
                     {{ text_field("profesional[]", "placeholder" : "Acudiente", "class" : "form-control excusa", "value" : beneficiario.CobActaconteoPersonaExcusa.profesional) }}

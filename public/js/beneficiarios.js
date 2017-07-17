@@ -16,7 +16,7 @@ $('.asistencia').each(function() {
 	}
 	else
 	{
-		if( asistencia == 4 || asistencia == 5 || asistencia == 6 ) {
+		if( asistencia == 4 || asistencia == 5 || asistencia == 6 || asistencia == 7) {
 			$(this).parent().parent().find(".excusa").removeClass("hidden");
 			$(this).parent().parent().find(".excusa").removeAttr("disabled");
 			$(this).parent().parent().find(".excusa").addClass("required");
@@ -48,7 +48,7 @@ $('.asistencia').change(function() {
 	}
 	else
 	{
-		if( asistencia == 4 || asistencia == 5 || asistencia == 6 ) {
+		if( asistencia == 4 || asistencia == 5 || asistencia == 6 || asistencia == 7) {
 			if( asistencia == 4 )
 			{
 				$(this).parent().parent().find("input[name='motivo[]']").attr('placeholder','Motivo');
