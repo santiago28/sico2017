@@ -14,19 +14,19 @@ class CobActaconteoPersona extends \Phalcon\Mvc\Model
      * @var integer
      */
     public $id_actaconteo;
-    
+
     /**
      *
      * @var integer
      */
     public $id_periodo;
-    
+
     /**
      *
      * @var integer
      */
     public $recorrido;
-    
+
     /**
      *
      * @var integer
@@ -98,7 +98,7 @@ class CobActaconteoPersona extends \Phalcon\Mvc\Model
      * @var integer
      */
     public $asistencia;
-    
+
     //Virtual Foreign Key para poder acceder a la fecha de corte del acta
     public function initialize()
     {
@@ -112,7 +112,7 @@ class CobActaconteoPersona extends \Phalcon\Mvc\Model
     			'reusable' => true
     	));
     }
-    
+
     /**
      * Returns a human representation of 'estado'
      *
@@ -151,7 +151,7 @@ class CobActaconteoPersona extends \Phalcon\Mvc\Model
     			return " class='warning'";
     			break;
     		case 5:
-    			return " class='warning'";
+    			return " class='success'";
     			break;
     		default:
     			return "";

@@ -4,6 +4,7 @@
         <meta charset="utf-8">
         {{ get_title() }}
         {{ stylesheet_link('css/bootstrap.min.css') }}
+        {{ stylesheet_link('css/bootstrap-datepicker.min.css') }}
         {{ stylesheet_link('css/style.css') }}
         {{ assets.outputCss() }}
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,6 +17,8 @@
         {{ javascript_include('js/jquery/jquery.min.js') }}
         {{ javascript_include('js/bootstrap.min.js') }}
         {{ javascript_include('js/utils.js') }}
+        {{ javascript_include('js/bootstrap-datepicker.min.js') }}
+        {{ javascript_include('js/bootstrap-datepicker.es.min.js') }}
         {{ assets.outputJs() }}
     </body>
 </html>

@@ -470,7 +470,7 @@ public function generarActa($id_actaconteo){
 	}
 	/*if ($acta->recorrido == '1') {*/
 	$encabezado = "<div class='seccion encabezado'>
-	<div class='fila center'><div>ACTA DE CONTEO VERIFICACIÓN FÍSICA DE LA ATENCIÓN DEL 100% DE LOS BENEFICIARIOS REPORTADOS EN EL SIBC<br>INTERVENTORÍA BUEN COMIENZO - <em>(RECORRIDO $acta->recorrido)</em></div></div>
+	<div class='fila center'><div style='margin-left:20%'>ACTA DE CONTEO VERIFICACIÓN FÍSICA DE LA ATENCIÓN DEL 100% DE LOS BENEFICIARIOS REPORTADOS EN EL SIBC<br>INTERVENTORÍA BUEN COMIENZO - <em>(RECORRIDO $acta->recorrido)</em></div></div>
 	<div class='fila col2 center'><div>Código: F-ITBC-GC-001</div><div>$nombre_mcb</div></div>
 	<div class='fila col3e'>
 	<div>ACTA: <span style='font-weight: normal;'>$acta_id</span></div>
@@ -493,31 +493,62 @@ public function generarActa($id_actaconteo){
 	$encabezado = "";
 }*/
 
-if ($acta->recorrido == '1') {
+if ($acta->id_modalidad == 5){ // ENTORNO FAMILIAR
+	if ($acta->recorrido == '1') {
+		$pie_pagina = "<div id='pie_pagina' class='pie_presencial'>
+		<div class='pull-left' style='padding-left: 60px; width: 50%; text-align: center; float: left;'>________________________________________________<br>FIRMA PERSONA ENCARGADA DE LA SEDE</div>
+		<div class='pull-right' style='padding-right: 60px; width: 50%; text-align: center; float: left;'>________________________________________________<br>FIRMA PERSONA ENCARGADA DE INTERVENTORÍA<br></div>
+		<div class='clear'></div>
+		</div>
+		<div id='pie_pagina' class='pie_virtual' style='display:none;' >
+		<div class='' style='text-align: center;'>________________________________________________<br>FIRMA PERSONA ENCARGADA DE INTERVENTORÍA<br></div>
+		<div class='clear'></div>
+		</div>";
+	}else {
+		$pie_pagina = "<div id='pie_pagina' class='pie_virtual'>
+		<div class='' style='text-align: center;'>________________________________________________<br>FIRMA PERSONA ENCARGADA DE INTERVENTORÍA<br></div>
+		<div class='clear'></div>
+		</div>
+		<div id='pie_pagina' class='pie_presencial' style='display:none;'>
+		<div class='pull-left' style='padding-left: 60px; width: 50%; text-align: center; float: left;'>________________________________________________<br>FIRMA PERSONA ENCARGADA DE LA SEDE</div>
+		<div class='pull-right' style='padding-right: 60px; width: 50%; text-align: center; float: left;'>________________________________________________<br>FIRMA PERSONA ENCARGADA DE INTERVENTORÍA<br></div>
+		<div class='clear'></div>
+		</div>
+		";
+	}
+}else {
 	$pie_pagina = "<div id='pie_pagina'>
 	<div class='pull-left' style='padding-left: 60px; width: 50%; text-align: center; float: left;'>________________________________________________<br>FIRMA PERSONA ENCARGADA DE LA SEDE</div>
 	<div class='pull-right' style='padding-right: 60px; width: 50%; text-align: center; float: left;'>________________________________________________<br>FIRMA PERSONA ENCARGADA DE INTERVENTORÍA<br></div>
 	<div class='clear'></div>
 	</div>";
-}else {
-	$pie_pagina = "<div id='pie_pagina'>
-	<div class='' style='text-align: center;'>________________________________________________<br>FIRMA PERSONA ENCARGADA DE INTERVENTORÍA<br></div>
-	<div class='clear'></div>
-	</div>";
 }
-
 /*<div class='fila'><div>1.5 LLAMADA TELEFÓNICA PRECERTIFICADA</div></div>
 <div class='fila'><div>1.6 LLAMADA TELEFÓNICA NO CERTIFICADA</div></div>*/
 if($acta->id_modalidad == 5){ // ENTORNO FAMILIAR
-	$totalizacion_asistencia = "<div class='seccion' id='totalizacion_asistencia'>
-	<div class='fila center bold'><div style='border:none; width: 100%'>1. TOTALIZACIÓN DE ASISTENCIA</div></div>
-	<div class='fila'><div>1.1 ASISTE</div></div>
-	<div class='fila'><div>1.2 RETIRADO</div></div>
-	<div class='fila'><div>1.3 AUSENTE</div></div>
-	<div class='fila'><div>1.4 BENEFICIARIO CON EXCUSA VALIDA</div></div>
-	<div class='fila'><div>1.5 GESTIÓN TELEFÓNICA CERTIFICADA</div></div>
-	<div class='clear'></div>
-	</div>";
+	if ($acta->recorrido == 1) {
+		$totalizacion_asistencia = "<div class='seccion' id='totalizacion_asistencia'>
+		<div class='fila center bold'><div style='border:none; width: 100%'>1. TOTALIZACIÓN DE ASISTENCIA</div></div>
+		<div class='fila'><div>1.1 ASISTE</div></div>
+		<div class='fila'><div>1.2 RETIRADO</div></div>
+		<div class='fila'><div>1.3 AUSENTE</div></div>
+		<div class='fila'><div>1.4 BENEFICIARIO CON EXCUSA VALIDA</div></div>
+		<div class='fila'><div>1.5 GESTIÓN TELEFÓNICA CERTIFICADA</div></div>
+		<div class='clear'></div>
+		</div>";
+	}else {
+		$totalizacion_asistencia = "<div class='seccion' id='totalizacion_asistencia'>
+		<div class='fila center bold'><div style='border:none; width: 100%'>1. TOTALIZACIÓN DE ASISTENCIA</div></div>
+		<div class='fila'><div>1.1 ASISTE</div></div>
+		<div class='fila'><div>1.2 RETIRADO</div></div>
+		<div class='fila'><div>1.3 AUSENTE</div></div>
+		<div class='fila'><div>1.4 BENEFICIARIO CON EXCUSA VALIDA</div></div>
+		<div class='fila'><div>1.5 GESTIÓN TELEFÓNICA CERTIFICADA</div></div>
+		<div class='fila visitavirtual'><div>1.7 ENCUENTRO EN CASA</div></div>
+		<div class='clear'></div>
+		</div>";
+	}
+
 }
 else {
 	$totalizacion_asistencia = "<div class='seccion' id='totalizacion_asistencia'>
@@ -536,31 +567,45 @@ else {
 $datos_acta = array();
 $datos_acta['datos'] = $acta;
 $html = "";
-$cualquier = 1;
-$html .= "<div class='form-group pull-right col-md-2' style='margin-top:-3.5%'>
-<button class='btn btn-primary noPrint visita' value='1' style='float: left;'>Presencial</button>
+
+$html .= "<div class='form-group pull-right col-md-2' style='margin-top:-3.5%' id='botones_visitas'>
+<button class='btn btn-primary noPrint visita' value='1' style='float: left;'>En Campo</button>
 <button class='btn btn-primary noPrint visita' value='2' style='float: right;'>Virtual</button>
 </div>";
 
-if ($cualquier == 1) {
-	echo "<script>console.log('$cualquier')</script>";
-}else {
-	echo "<script>console.log('$cualquier')</script>";
-}
 $html .= "<div id='imprimir'>"; // <acta>
 //Página Prestador
-$html .= $encabezado;
-$html .= $totalizacion_asistencia;
-$html .= "
-<div class='seccion' id='datos_generales'>
-<div class='fila center bold'><div style='border:none; width: 100%'>2. DATOS GENERALES</div></div>
-<div class='fila col3'><div>2.1 FECHA INTERVENTORÍA:</div><div>2.2 HORA INICIO INTERVENTORÍA:</div><div>2.3 HORA FIN INTERVENTORÍA:</div></div>
-<div class='clear'></div>
-</div>";
-$html .= $pie_pagina;
-$html .= "<div class='paginacion'>PÁGINA DEL PRESTADOR</div>";
-//Página en blanco para impresión a doble cara
-$html .= "<div class='seccion encabezado' style='border: none'></div>";
+if ($acta->id_modalidad == 5) {
+	if ($acta->recorrido == '1') {
+		$html .= $encabezado;
+		$html .= $totalizacion_asistencia;
+		$html .= "
+		<div class='seccion' id='datos_generales'>
+		<div class='fila center bold'><div style='border:none; width: 100%'>2. DATOS GENERALES</div></div>
+		<div class='fila col3'><div>2.1 FECHA INTERVENTORÍA:</div><div>2.2 HORA INICIO INTERVENTORÍA:</div><div>2.3 HORA FIN INTERVENTORÍA:</div></div>
+		<div class='clear'></div>
+		</div>";
+		$html .= $pie_pagina;
+
+		$html .= "<div class='paginacion'>PÁGINA DEL PRESTADOR</div>";
+		//Página en blanco para impresión a doble cara
+		$html .= "<div class='seccion encabezado' style='border: none'></div>";
+	}
+}else {
+	$html .= $encabezado;
+	$html .= $totalizacion_asistencia;
+	$html .= "
+	<div class='seccion' id='datos_generales'>
+	<div class='fila center bold'><div style='border:none; width: 100%'>2. DATOS GENERALES</div></div>
+	<div class='fila col3'><div>2.1 FECHA INTERVENTORÍA:</div><div>2.2 HORA INICIO INTERVENTORÍA:</div><div>2.3 HORA FIN INTERVENTORÍA:</div></div>
+	<div class='clear'></div>
+	</div>";
+	$html .= $pie_pagina;
+
+	$html .= "<div class='paginacion'>PÁGINA DEL PRESTADOR</div>";
+	//Página en blanco para impresión a doble cara
+	$html .= "<div class='seccion encabezado' style='border: none'></div>";
+}
 //Página 1
 $aiepi = "";
 //Si el acta es I8H, LDK, PP ó JI se coloca el mensaje AIEPI
@@ -626,7 +671,7 @@ else
 	</div>
 	<div class='seccion' id='observaciones'>
 	<div class='fila center bold'><div style='border:none; width: 100%'>3. OBSERVACIONES AL MOMENTO DE LA INTERVENTORÍA</div></div>
-	<div class='fila observacion'><div>3.1 OBSERVACIÓN DEL INTERVENTOR:$aiepi</div></div>
+	<div class='fila observacion' style='margin-top:0px;'><div>3.1 OBSERVACIÓN DEL INTERVENTOR:$aiepi</div></div>
 	<div class='fila observacion'><div>3.2 OBSERVACIÓN DEL ENCARGADO DE LA SEDE:</div></div>
 	<div class='clear'></div>
 	</div>";
@@ -650,13 +695,48 @@ $fecha_encabezado2 = "";
 //   		}
 
 if($acta->id_modalidad == 5){ // ENTORNO FAMILIAR
-	$encabezado_beneficiarios = "<div class='seccion visitavirtual' id='listado_beneficiarios'>
-	<div class='fila center bold'><div style='border:none; width: 100%'>4. LISTADO DE BENEFICIARIOS REPORTADOS EN EL SISTEMA DE INFORMACIÓN DE BUEN COMIENZO</div></div>
-	<div class='fila colb'><div style='width: 5%;'>#</div><div style='width: 15%;'>4.1 DOCUMENTO</div><div style='width: 30%'>4.2 NOMBRE COMPLETO</div><div style='width: 10%'>4.3 GRUPO</div><div style='width: 10%'><span style='font-size: 8px !important;'>4.4 ASISTENCIA</span></div><div style='width: 10%'><span style='font-size: 8px !important;'>4.5 EXCUSA</span></div><div style='width: 10%'><span style='font-size: 8px !important;'>4.6 FECHA VISITA</span></div></div>";
+	if ($acta->recorrido == '1') {
+		$encabezado_beneficiarios = "<div class='seccion' id='listado_beneficiarios'>
+		<div class='fila center bold'><div style='border:none; width: 100%'>4. LISTADO DE BENEFICIARIOS REPORTADOS EN EL SISTEMA DE INFORMACIÓN DE BUEN COMIENZO</div></div>
+		<div class='fila colb'><div style='width: 5%;'>#</div><div style='width: 15%;'>4.1 DOCUMENTO</div><div style='width: 30%'>4.2 NOMBRE COMPLETO</div><div style='width: 10%'>4.3 GRUPO</div><div style='width: 10%'><span style='font-size: 8px !important;'>4.4 FECHA ENCUENTRO</span></div><div style='width: 10%'><span style='font-size: 8px !important;'>4.5 HORA ENCUENTRO</span></div><div style='width: 10%'><span style='font-size: 8px !important;'>4.6 TIPO ENCUENTRO</span></div><div style='width: 10%'>4.7 ASISTENCIA</div>$fecha_encabezado</div>";
+	}else {
+		$encabezado_beneficiarios = "
+		<div class='seccion' id='listado_beneficiarios'>
+
+		  <div class='fila center bold visitavirtual'>
+		  	<div style='border:none; width: 100%'>4. LISTADO DE BENEFICIARIOS REPORTADOS EN EL SISTEMA DE INFORMACIÓN DE BUEN COMIENZO</div>
+		  </div>
+		  <div class='fila colb visitavirtual'>
+		  	<div style='width: 5%;'>#</div>
+		  	<div style='width: 15%;'>4.1 DOCUMENTO</div><div style='width: 30%'>4.2 NOMBRE COMPLETO</div>
+		  	<div style='width: 10%'>4.3 GRUPO</div>
+		  	<div style='width: 10%'><span style='font-size: 8px !important;'>4.4 ASISTENCIA</span></div>
+		  	<div style='width: 10%'><span style='font-size: 8px !important;'>4.5 EXCUSA</span></div>
+		  	<div style='width: 10%'><span style='font-size: 8px !important;'>4.6 FECHA VISITA</span></div>
+		  </div>
+
+		<!--<div class='seccion' id='listado_beneficiarios'>-->
+		  <div class='fila center bold visitapresencial '>
+		  	<div style='border:none; width: 100%'>4. LISTADO DE BENEFICIARIOS REPORTADOS EN EL SISTEMA DE INFORMACIÓN DE BUEN COMIENZO</div>
+		  </div>
+		  <div class='fila colb visitapresencial'>
+		  	<div style='width: 5%;'>#</div>
+		  	<div style='width: 15%;'>4.1 DOCUMENTO</div>
+		  	<div style='width: 30%'>4.2 NOMBRE COMPLETO</div>
+		  	<div style='width: 10%'>4.3 GRUPO</div>
+		  	<div style='width: 10%'><span style='font-size: 8px !important;'>4.4 FECHA ENCUENTRO</span></div>
+		  	<div style='width: 10%'><span style='font-size: 8px !important;'>4.5 HORA ENCUENTRO</span></div>
+		  	<div style='width: 10%'><span style='font-size: 8px !important;'>4.6 TIPO ENCUENTRO</span></div>
+		  	<div style='width: 10%'>4.7 ASISTENCIA</div>$fecha_encabezado
+		</div>
+		";
+	}
+
+
 }
 else
 {
-	$encabezado_beneficiarios = "<div class='seccion' id='listado_beneficiarios'>
+	$encabezado_beneficiarios = "<div class='seccion visitapresencial' id='listado_beneficiarios'>
 	<div class='fila center bold'><div style='border:none; width: 100%'>4. LISTADO DE BENEFICIARIOS REPORTADOS EN EL SISTEMA DE INFORMACIÓN DE BUEN COMIENZO</div></div>
 	<div class='fila colb'><div style='width: 5%;'>#</div><div style='width: 15%;'>4.1 DOCUMENTO</div><div style='width: 30%'>4.2 NOMBRE COMPLETO</div><div style='width: 30%'>4.3 GRUPO</div><div style='width: 10%'>4.4 ASISTENCIA</div>$fecha_encabezado</div>";
 }
@@ -716,20 +796,47 @@ if($acta->id_modalidad == 12){
 			$html .= $encabezado_beneficiarios;
 		}
 		if($acta->id_modalidad == 5){ // ENTORNO FAMILIAR
-			//$excusa = new CobActaconteoPersonaExcusa();
-			$query = $this->modelsManager->createQuery("SELECT *
-				FROM CobActaconteoPersonaExcusa
-				WHERE id_actaconteo_persona = :id_actaconteo_persona:");
-				$cob_actaconteo_persona_excusa  = $query->execute(
-					array(
-						'id_actaconteo_persona' => "$row->id_actaconteo_persona"
-					)
-				);
-				$excusa = "";
-				foreach ($cob_actaconteo_persona_excusa as $row1 ) {
-					$excusa = $row1->motivo;
+
+			if ($acta->recorrido == '1') {
+				$html .="<div class='fila colb'$mayor5><div style='width: 5%;'>$i</div><div style='width: 15%;'>$row->numDocumento</div><div style='width: 30%;'>$mayor_5$nombre_completo</div><div style='width: 10%;'>$row->grupo&nbsp;</div><div style='width: 10%;'>&nbsp;</div><div style='width: 10%;'>&nbsp;</div><div style='width: 10%;'>&nbsp;</div><div style='width: 10%;'>&nbsp;</div>$fecha_lista</div>";
+			}else {
+				$query = $this->modelsManager->createQuery("SELECT *
+					FROM CobActaconteoPersonaExcusa
+					WHERE id_actaconteo_persona = :id_actaconteo_persona:");
+					$cob_actaconteo_persona_excusa  = $query->execute(
+						array(
+							'id_actaconteo_persona' => "$row->id_actaconteo_persona"
+						)
+					);
+					$excusa = "";
+					foreach ($cob_actaconteo_persona_excusa as $row1 ) {
+						$excusa = $row1->motivo;
+					}
+					$html .="
+					<div class='fila colb visitavirtual'$mayor5>
+						<div style='width: 5%; min-height: 100%; height: auto;' class='clearfix'>$i</div>
+						<div style='width: 15%; min-height: 100%; height: auto;' class='clearfix'>$row->numDocumento</div>
+						<div style='width: 30%; min-height: 100%; height: auto;' class='clearfix'>$mayor_5$nombre_completo</div>
+						<div style='width: 10%; min-height: 100%; height: auto;' class='clearfix'>$row->grupo&nbsp;</div>
+						<div style='width: 10%; min-height: 100%; height: auto;' class='clearfix'>$row->asistencia&nbsp;</div>
+						<div style='width: 10%; min-height: 100%; height: auto;' class='clearfix'>$excusa&nbsp;</div>
+						<div style='width: 10%; min-height: 100%; height: auto;' class='clearfix'>$row->fechaInterventoria&nbsp;</div>
+					</div>
+
+					<div class='fila colb visitapresencial'$mayor5>
+						<div style='width: 5%;'>$i</div>
+						<div style='width: 15%;'>$row->numDocumento</div>
+						<div style='width: 30%;'>$mayor_5$nombre_completo</div>
+						<div style='width: 10%;'>$row->grupo&nbsp;</div>
+						<div style='width: 10%;'>&nbsp;</div>
+						<div style='width: 10%;'>&nbsp;</div>
+						<div style='width: 10%;'>&nbsp;</div>
+						<div style='width: 10%;'>&nbsp;</div>
+					$fecha_lista</div>
+					";
 				}
-				$html .="<div class='fila colb'$mayor5><div style='width: 5%;'>$i</div><div style='width: 15%;'>$row->numDocumento</div><div style='width: 30%;'>$mayor_5$nombre_completo</div><div style='width: 10%;'>$row->grupo&nbsp;</div><div style='width: 10%;'>$row->asistencia&nbsp;</div><div style='width: 10%; height: auto;'>$excusa&nbsp;</div><div style='width: 10%;'>$row->fechaInterventoria&nbsp;</div></div>";
+
+
 			}
 			else
 			{
@@ -785,88 +892,120 @@ if($acta->id_modalidad == 12){
 	// }
 	$html .= "<div class='clear'></div>"; // </acta>
 	$html .= "<script>
-							setTimeout(function(){
-								$('.visita').click(function(){
-									var tipovisita = $(this).attr('value');
-									if (tipovisita == '1') {
-										$('.visitavirtual').css('display', 'none');
-									}else {
-										$('.visitavirtual').css('display', 'block');
-									}
-								});
-							}, 1000);
-						</script>";
-	$datos_acta['html'] = $html;
-	return $datos_acta;
-}
+	setTimeout(function(){
+		var vars = {};
+			var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
+				vars[key] = value;
+			});
+			var recorrido = $acta->recorrido;
+			var modalidad = $acta->id_modalidad;
+			if (modalidad == 5) {
+				if (recorrido == 1) {
+					vars['tipovisita'] = 1;
+					$('#botones_visitas').css('display','none');
+				}
+				if (vars['tipovisita'] == undefined) {
+					$('.pie_virtual').css('display', 'block');
+					$('.pie_presencial').css('display', 'none');
+					$('.visitavirtual').css('display', 'flex');
+					$('.visitapresencial').css('display', 'none');
+				}else {
+					if (vars['tipovisita'] == 1) {
+						$('.pie_virtual').css('display', 'none');
+						$('.pie_presencial').css('display', 'block');
+						$('.visitavirtual').css('display', 'none');
+						$('.visitapresencial').css('display', 'flex');
+					}else {
+						$('.pie_virtual').css('display', 'block');
+						$('.pie_presencial').css('display', 'none');
+						$('.visitavirtual').css('display', 'flex');
+						$('.visitapresencial').css('display', 'none');
+					}
+				}
+			}else {
+				$('#botones_visitas').css('display','none');
+			}
+		});
+		setTimeout(function(){
+			$('.visita').click(function(){
+				var tipovisita = $(this).attr('value');
+				window.location.href = '?tipovisita=' + tipovisita;
 
-/**
-* Returns a human representation of 'estado'
-*
-* @return string
-*/
-public function getEstadoDetail()
-{
-	switch ($this->estado) {
-		case 0:
-		return "Inactiva";
-		break;
-		case 1:
-		return "Activa";
-		break;
-		case 2:
-		return "Cerrada por Interventor";
-		break;
-		case 3:
-		return "Cerrada por Auxiliar";
-		break;
-		case 4:
-		return "Consolidada";
-		break;
-		case 5:
-		return "Periodo cerrado";
-		break;
+			});
+		}, 1000);
+		</script>";
+
+		$datos_acta['html'] = $html;
+		return $datos_acta;
 	}
-}
 
-/**
-* Returns a human representation of 'id_actaconteo'
-*
-* @return string
-*/
-public function getIdDetail()
-{
-	return "ACO-03-". date("Y") . sprintf('%05d', $this->id_actaconteo);
-}
+	/**
+	* Returns a human representation of 'estado'
+	*
+	* @return string
+	*/
+	public function getEstadoDetail()
+	{
+		switch ($this->estado) {
+			case 0:
+			return "Inactiva";
+			break;
+			case 1:
+			return "Activa";
+			break;
+			case 2:
+			return "Cerrada por Interventor";
+			break;
+			case 3:
+			return "Cerrada por Auxiliar";
+			break;
+			case 4:
+			return "Consolidada";
+			break;
+			case 5:
+			return "Periodo cerrado";
+			break;
+		}
+	}
 
-/**
-* Returns a human representation of 'id_actamuestreo'
-*
-* @return string
-*/
-public function getId()
-{
-	return $this->id_actaconteo;
-}
+	/**
+	* Returns a human representation of 'id_actaconteo'
+	*
+	* @return string
+	*/
+	public function getIdDetail()
+	{
+		return "ACO-03-". date("Y") . sprintf('%05d', $this->id_actaconteo);
+	}
 
-/**
-* Contar beneficiarios
-*
-* @return string
-*/
-public function countBeneficiarios()
-{
-	return count($this->CobActaconteoPersona);
-}
+	/**
+	* Returns a human representation of 'id_actamuestreo'
+	*
+	* @return string
+	*/
+	public function getId()
+	{
+		return $this->id_actaconteo;
+	}
 
-/**
-* Returns a human representation of 'url'
-*
-* @return string
-*/
-public function getUrlDetail()
-{
-	return "cob_actaconteo/ver/$this->id_actaconteo";
-}
+	/**
+	* Contar beneficiarios
+	*
+	* @return string
+	*/
+	public function countBeneficiarios()
+	{
+		return count($this->CobActaconteoPersona);
+	}
+
+	/**
+	* Returns a human representation of 'url'
+	*
+	* @return string
+	*/
+	public function getUrlDetail()
+	{
+		return "cob_actaconteo/ver/$this->id_actaconteo";
+	}
 
 }

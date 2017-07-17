@@ -1,7 +1,10 @@
 
 {{ content() }}
 <h1>Base de Datos Niño a Niño Consolidado Final {{ periodo.getFechaAnioDetail() }} <br><small>CONTRATO {{ contrato.id_contrato }} MODALIDAD {{ contrato.BcSedeContrato.modalidad_nombre }}</small></h1>
-{{ link_to("bc_reporte/oferente_periodos/"~contrato.id_contrato, '<i class="glyphicon glyphicon-chevron-left"></i> Regresar', "class": "btn btn-primary menu-tab") }}
+<div class='col-md-10'>
+	{{ link_to("bc_reporte/oferente_periodos/"~contrato.id_contrato, '<i class="glyphicon glyphicon-chevron-left"></i> Regresar', "class": "btn btn-primary menu-tab") }}
+	<button class='btn btn-primary' id='ExportarExcel'>Exportar</button>
+</div>
 <table class="table table-bordered table-hover">
 	<thead>
     	 <tr>
@@ -46,3 +49,32 @@
     {% endfor %}
     </tbody>
 </table>
+
+<script>
+setTimeout(function(){
+	$("#ExportarExcel").click(function(){
+		var Export = [];
+		{% for beneficiario in beneficiarios %}
+			Export.push({
+				"Nombre sede": "{{ beneficiario.CobActaconteo.sede_nombre }}",
+				"Nombre Grupo": "{{ beneficiario.grupo }}",
+				"ID Persona": "{{ beneficiario.id_persona }}",
+				"Número documento": "{{ beneficiario.numDocumento }}",
+				"Primer Nombre": "{{ beneficiario.primerNombre }}",
+				"Segundo Nombre": "{{ beneficiario.segundoNombre }}",
+				"Primer Apellido": "{{ beneficiario.primerApellido }}",
+				"Segundo Apellido": "{{ beneficiario.segundoApellido }}",
+				"Fecha Registro Matricula": "{{ beneficiario.fechaRegistro }}",
+				"Fecha Registro Beneficiario": "{{ beneficiario.fechaInicioAtencion }}",
+				"Fecha Retiro": "{{ beneficiario.fechaRetiro }}",
+				"Acta R3": "{{ beneficiario.acta1 }}",
+				"Asistencia R3": "{{ beneficiario.asistencia1 }}",
+				"Observación R3": "{{ beneficiario.getObservacion1() }}",
+				"Certificación R3": "{{ beneficiario.getCertificacion1() }}",
+				"Certificación Recorridos": "{{ beneficiario.getCertificacionRecorridos() }}"
+			})
+		{% endfor %}
+		alasql('SELECT * INTO XLSX("Reporte Niño a Niño todos los Recorridos.xlsx",{headers:true}) FROM ?', [Export]);
+	});
+}, 1000);
+</script>

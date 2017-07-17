@@ -103,7 +103,9 @@ class BcReporteController extends ControllerBase
     	->addJs('js/jquery.tablesorter.min.js')
     	->addJs('js/jquery.tablesorter.widgets.js')
     	->addJs('js/multifilter.min.js')
-    	->addJs('js/reporte.js');
+    	->addJs('js/reporte.js')
+			->addJs('js/alasql.min.js')
+			->addJs('js/xlsx.core.min.js');
     	$reporte_contrato = CobActaconteoPersonaFacturacion::find(array("id_periodo = $id_periodo AND id_contrato = $id_contrato"));
     	$this->view->periodo = $cob_periodo;
     	$this->view->beneficiarios = $reporte_contrato;
@@ -132,7 +134,9 @@ class BcReporteController extends ControllerBase
     	->addJs('js/jquery.tablesorter.min.js')
     	->addJs('js/jquery.tablesorter.widgets.js')
     	->addJs('js/multifilter.min.js')
-    	->addJs('js/reporte.js');
+    	->addJs('js/reporte.js')
+			->addJs('js/alasql.min.js')
+			->addJs('js/xlsx.core.min.js');
     	$reporte_contrato = CobActaconteoPersonaFacturacion::find(array("id_periodo = $id_periodo AND id_contrato = $id_contrato"));
     	$this->view->periodo = $cob_periodo;
     	$this->view->beneficiarios = $reporte_contrato;

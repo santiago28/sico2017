@@ -1,7 +1,10 @@
 
 {{ content() }}
 <h1>Base de Datos Niño a Niño Consolidado Parcial 1er y 2do Recorridos {{ periodo.getFechaAnioDetail() }} <br><small>CONTRATO {{ contrato.id_contrato }} MODALIDAD {{ contrato.BcSedeContrato.modalidad_nombre }}</small></h1>
-{{ link_to("bc_reporte/oferente_periodos/"~contrato.id_contrato, '<i class="glyphicon glyphicon-chevron-left"></i> Regresar', "class": "btn btn-primary menu-tab") }}
+<div class='col-md-10'>
+	{{ link_to("bc_reporte/oferente_periodos/"~contrato.id_contrato, '<i class="glyphicon glyphicon-chevron-left"></i> Regresar', "class": "btn btn-primary menu-tab") }}
+	<button class='btn btn-primary' id='ExportarExcel'>Exportar</button>
+</div>
 <table id='reporte' class="table table-bordered table-hover">
 	<thead>
     	 <tr>
@@ -52,3 +55,36 @@
     {% endfor %}
     </tbody>
 </table>
+
+
+<script>
+setTimeout(function(){
+	$("#ExportarExcel").click(function(){
+		var Export = [];
+		{% for beneficiario in beneficiarios %}
+			Export.push({
+				"Nombre sede": "{{ beneficiario.CobActaconteo.sede_nombre }}",
+				"Nombre Grupo": "{{ beneficiario.grupo }}",
+				"ID Persona": "{{ beneficiario.id_persona }}",
+				"Número documento": "{{ beneficiario.numDocumento }}",
+				"Primer Nombre": "{{ beneficiario.primerNombre }}",
+				"Segundo Nombre": "{{ beneficiario.segundoNombre }}",
+				"Primer Apellido": "{{ beneficiario.primerApellido }}",
+				"Segundo Apellido": "{{ beneficiario.segundoApellido }}",
+				"Fecha Registro Matricula": "{{ beneficiario.fechaRegistro }}",
+				"Fecha Registro Beneficiario": "{{ beneficiario.fechaInicioAtencion }}",
+				"Fecha Retiro": "{{ beneficiario.fechaRetiro }}",
+				"Acta R1": "{{ beneficiario.acta1 }}",
+				"Asistencia R1": "{{ beneficiario.asistencia1 }}",
+				"Observación R1": "{{ beneficiario.getObservacion1() }}",
+				"Certificación R1": "{{ beneficiario.getCertificacion1() }}",
+				"Acta R2": "{{ beneficiario.acta2 }}",
+				"Asistencia R2": "{{ beneficiario.asistencia2 }}",
+				"Observación R2": "{{ beneficiario.getObservacion2() }}",
+				"Certificación R2": "{{ beneficiario.getCertificacion2() }}",
+			})
+		{% endfor %}
+		alasql('SELECT * INTO XLSX("Reporte Niño a Niño R1 y R2.xlsx",{headers:true}) FROM ?', [Export]);
+	});
+}, 1000);
+</script>
