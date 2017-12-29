@@ -43,9 +43,18 @@ class BcReporteController extends ControllerBase
     	->addJs('js/jquery.table2excel.min.js')
     	->addJs('js/reporte_exportar.js');
 
-    	$reporte_contratos = CobActaconteoPersonaFacturacion::find(array("id_periodo = $id_periodo", "group" => "id_contrato"));
+			if ($id_periodo >= 43) {
+				$reporte_contratos = CobActaconteoPersonaFacturacion::find(array("id_periodo = $id_periodo and id_contrato != 4600068492 and  id_contrato != 4600068493 and  id_contrato != 4600068494 and  id_contrato != 4600068495 and \n".
+				"id_contrato != 4600068496 and  id_contrato != 4600068497 and  id_contrato != 4600068498 and  id_contrato != 4600068499 and  id_contrato != 4600068500 and  id_contrato != 4600068501 and  id_contrato != 4600068502 and  id_contrato != 4600068503 and  id_contrato != 4600068504 and  id_contrato != 4600068505 and \n".
+				"id_contrato != 4600068506 and  id_contrato != 4600068507 and  id_contrato != 4600068508 and  id_contrato != 4600068509 and  id_contrato != 4600068510 and  id_contrato != 4600068511 and \n".
+				"id_contrato != 4600068512 and  id_contrato != 4600068513 and  id_contrato != 4600068514 and  id_contrato != 4600068515 and  id_contrato != 4600068516 and  id_contrato != 4600068517 and  id_contrato != 4600068518 and  id_contrato != 4600068519 and  id_contrato != 4600068520 and  id_contrato != 4600068521 and  id_contrato != 4600068522 and  id_contrato != 4600068523 and \n".
+				"id_contrato != 4600068524 and  id_contrato != 4600068525 and  id_contrato != 4600068526 and  id_contrato != 4600068527 and  id_contrato != 4600068528 and  id_contrato != 4600068529 and  id_contrato != 4600068530 and  id_contrato != 4600068531 and  id_contrato != 4600068532 and  id_contrato != 4600068533 and  id_contrato != 4600068534 and  id_contrato != 4600068535 and \n".
+				"id_contrato != 4600068536 and  id_contrato != 4600068537 and  id_contrato != 4600068555 \n", "group" => "id_contrato"));
+			}else {
+				$reporte_contratos = CobActaconteoPersonaFacturacion::find(array("id_periodo = $id_periodo", "group" => "id_contrato"));
+			}
     	$this->view->contratos = $reporte_contratos;
-    	$this->view->nombre_reporte = "Rpt_" . $cob_periodo->getPeriodoReporte . "_contratos_" . date("YmdHis") . ".xlsx";
+    	//$this->view->nombre_reporte = "Rpt_" . $cob_periodo->getPeriodoReporte . "_contratos_" . date("YmdHis") . ".xlsx";
     	if($tipo == 1){
     		$this->view->setTemplateAfter('../bc_reporte/cob_contratos_general');
     	} else if($tipo == 3) {
@@ -54,9 +63,11 @@ class BcReporteController extends ControllerBase
     		$this->view->setTemplateAfter('../bc_reporte/cob_contratos_itinerante');
     	} else if($tipo == 5) {
     		$this->view->setTemplateAfter('../bc_reporte/cob_contratos_jardines');
+    	}elseif ($tipo == 2) {
+    		$this->view->setTemplateAfter('../bc_reporte/cob_contratos_familiar');
     	}
 
-    }
+	}
 
     /**
      * Reporte general de Cobertura de Sedes
@@ -68,7 +79,17 @@ class BcReporteController extends ControllerBase
     		$this->flash->error("El periodo no fue encontrado");
     		return $this->response->redirect("cob_periodo/");
     	}
-    	$reporte_sedes = CobActaconteoPersonaFacturacion::find(array("id_periodo = $id_periodo", "group" => "id_sede_contrato", "order" => "id_contrato ASC"));
+			if ($id_periodo >= 43) {
+				$reporte_sedes = CobActaconteoPersonaFacturacion::find(array("id_periodo = $id_periodo and id_contrato != 4600068492 and  id_contrato != 4600068493 and  id_contrato != 4600068494 and  id_contrato != 4600068495 and \n".
+				"id_contrato != 4600068496 and  id_contrato != 4600068497 and  id_contrato != 4600068498 and  id_contrato != 4600068499 and  id_contrato != 4600068500 and  id_contrato != 4600068501 and  id_contrato != 4600068502 and  id_contrato != 4600068503 and  id_contrato != 4600068504 and  id_contrato != 4600068505 and \n".
+				"id_contrato != 4600068506 and  id_contrato != 4600068507 and  id_contrato != 4600068508 and  id_contrato != 4600068509 and  id_contrato != 4600068510 and  id_contrato != 4600068511 and \n".
+				"id_contrato != 4600068512 and  id_contrato != 4600068513 and  id_contrato != 4600068514 and  id_contrato != 4600068515 and  id_contrato != 4600068516 and  id_contrato != 4600068517 and  id_contrato != 4600068518 and  id_contrato != 4600068519 and  id_contrato != 4600068520 and  id_contrato != 4600068521 and  id_contrato != 4600068522 and  id_contrato != 4600068523 and \n".
+				"id_contrato != 4600068524 and  id_contrato != 4600068525 and  id_contrato != 4600068526 and  id_contrato != 4600068527 and  id_contrato != 4600068528 and  id_contrato != 4600068529 and  id_contrato != 4600068530 and  id_contrato != 4600068531 and  id_contrato != 4600068532 and  id_contrato != 4600068533 and  id_contrato != 4600068534 and  id_contrato != 4600068535 and \n".
+				"id_contrato != 4600068536 and  id_contrato != 4600068537 and  id_contrato != 4600068555 \n", "group" => "id_sede_contrato", "order" => "id_contrato ASC"));
+			}else {
+				$reporte_sedes = CobActaconteoPersonaFacturacion::find(array("id_periodo = $id_periodo", "group" => "id_sede_contrato", "order" => "id_contrato ASC"));
+			}
+
     	$this->view->sedes = $reporte_sedes;
     	if($tipo == 1){
     		$this->view->setTemplateAfter('../bc_reporte/cob_sedes_general');
@@ -78,6 +99,8 @@ class BcReporteController extends ControllerBase
     		$this->view->setTemplateAfter('../bc_reporte/cob_sedes_itinerante');
     	} else if($tipo == 5) {
     		$this->view->setTemplateAfter('../bc_reporte/cob_sedes_jardines');
+    	}elseif ($tipo == 2) {
+    		$this->view->setTemplateAfter('../bc_reporte/cob_sedes_familiar');
     	}
     }
 
@@ -212,7 +235,7 @@ class BcReporteController extends ControllerBase
     		$this->flash->error("Este usuario no fue encontrado en la base de datos de prestadores.");
     		return $this->response->redirect("/");
     	}
-    	$contratos = BcSedeContrato::find(array("id_oferente = $oferente->id_oferente", "group" => "id_contrato" ));
+    	$contratos = CobActaconteo::find(array("id_oferente = $oferente->id_oferente", "group" => "id_contrato" ));
     	if (!$contratos) {
     		$this->flash->error("No se encontraron contratos");
     		return $this->response->redirect("/");
@@ -225,7 +248,7 @@ class BcReporteController extends ControllerBase
      */
     public function oferentes_contratosAction()
     {
-    	$contratos = BcSedeContrato::find(array("group" => "id_contrato", "order" => "id_oferente ASC"));
+    	$contratos = CobActaconteo::find(array("group" => "id_contrato", "order" => "id_oferente ASC"));
     	if (!$contratos) {
     		$this->flash->error("No se encontraron contratos");
     		return $this->response->redirect("/");
@@ -244,7 +267,7 @@ class BcReporteController extends ControllerBase
     			$this->flash->error("Este usuario no fue encontrado en la base de datos de prestadores.");
     			return $this->response->redirect("/");
     		}
-    		$periodos = CobActaconteo::find(array("id_contrato = $id_contrato AND id_oferente = $oferente->id_oferente", "group" => "id_periodo"));
+    		$periodos = CobActaconteo::find(array("id_contrato = $id_contrato AND id_oferente = $oferente->id_oferente and (id_modalidad = 1 or id_periodo NOT IN (47,48))", "group" => "id_periodo"));
     	} else {
     		$periodos = CobActaconteo::find(array("id_contrato = $id_contrato", "group" => "id_periodo"));
     	}
@@ -265,8 +288,10 @@ class BcReporteController extends ControllerBase
     	->addJs('js/jquery.tablesorter.min.js')
     	->addJs('js/jquery.tablesorter.widgets.js')
     	->addJs('js/multifilter.min.js')
+			->addJs('js/alasql.min.js')
+			->addJs('js/xlsx.core.min.js')
     	->addJs('js/reporte.js');
-    	$reporte_contrato = CobActaconteoPersonaFacturacion::find(array("id_contrato = $id_contrato", "order" => " id_periodo ASC"));
+		$reporte_contrato = CobActaconteoPersonaFacturacion::find(array("id_contrato = $id_contrato", "order" => " id_periodo ASC"));
     	$this->view->beneficiarios = $reporte_contrato;
     	$this->view->contrato = $reporte_contrato[0];
     }

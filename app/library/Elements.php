@@ -109,7 +109,7 @@ class Elements extends Component
 	);
 	private $_headerMenu = array(
 		'ibc_mensaje' => array(
-			'caption' => 'Comunicaciones',
+			'caption' => 'Ubicación Sedes',
 			'action' => 'anuncios'
 		),
 		'cob_periodo' => array(
@@ -131,10 +131,10 @@ class Elements extends Component
 	);
 
 	private $_headerMenuOferente = array(
-		'ibc_mensaje' => array(
-			'caption' => 'Comunicaciones',
-			'action' => 'anuncios'
-		),
+		// 'ibc_mensaje' => array(
+		// 	'caption' => 'Ubicación Sedes',
+		// 	'action' => 'anuncios'
+		// ),
 		'ibc_archivo_digital' => array(
 			'caption' => 'Archivo Digital',
 			'action' => 'index'
@@ -159,7 +159,7 @@ class Elements extends Component
 
 	private $_headerMenuBCReportes = array(
 		'ibc_mensaje' => array(
-			'caption' => 'Comunicaciones',
+			'caption' => 'Ubicación Sedes',
 			'action' => 'anuncios'
 		),
 		'ibc_archivo_digital' => array(
@@ -174,7 +174,7 @@ class Elements extends Component
 
 	private $_headerMenuPermisosBC = array(
 		'ibc_mensaje' => array(
-			'caption' => 'Comunicaciones',
+			'caption' => 'Ubicación Sedes',
 			'action' => 'anuncios'
 		),
 		'bc_permiso' => array(
@@ -185,7 +185,7 @@ class Elements extends Component
 
 	private $_headerMenuComponente = array(
 		'ibc_mensaje' => array(
-			'caption' => 'Comunicaciones',
+			'caption' => 'Ubicación Sedes',
 			'action' => 'anuncios'
 		)
 	);
@@ -451,7 +451,14 @@ class Elements extends Component
 		echo "</div>";
 		echo "<a href='/sico/cob_periodo/recorrido/$acta->id_periodo/$acta->recorrido' class='btn btn-primary regresar'><i class='glyphicon glyphicon-chevron-left'></i> Regresar</a>";
 		//Si no es el recorrido 1 quita el menú de adicionales
-		if($acta->recorrido > 1 && $acta->id_modalidad != 12){
+		if ($acta->id_modalidad != 5) {
+			if($acta->recorrido > 1 && $acta->id_modalidad != 12){
+				unset($this->_actaMenu['adicionales']);
+				unset($this->_actaMenu['adicionalescapturas']);
+			}
+		}
+
+		if ($acta->id_modalidad == 5 && $acta->recorrido == 3) {
 			unset($this->_actaMenu['adicionales']);
 			unset($this->_actaMenu['adicionalescapturas']);
 		}
@@ -780,195 +787,195 @@ class Elements extends Component
 						'5' => '5',
 						'6' => '6',
 						'7' => '7');
-					break;
-					case "datos_valla":
-					return array (
-						'1' => '1. Si cuenta con valla, según manual del Programa Buen Comienzo',
-						'2' => '2. No cuenta con valla, según manual del Programa Buen Comienzo',
-						'3' => '3. No cuenta con ningún tipo de valla de identificación',
-						'4' => '4. No Aplica');
 						break;
-						case "estadoVisita":
+						case "datos_valla":
 						return array (
-							'1' => '1. Atendido',
-							'2' => '2. Visita Fallida',
-							'3' => '3. No se evidenció el hogar');
+							'1' => '1. Si cuenta con valla, según manual del Programa Buen Comienzo',
+							'2' => '2. No cuenta con valla, según manual del Programa Buen Comienzo',
+							'3' => '3. No cuenta con ningún tipo de valla de identificación',
+							'4' => '4. No Aplica');
 							break;
-							case "numeroEncuentos":
+							case "estadoVisita":
 							return array (
-								'0' => '0',
-								'1' => '1',
-								'2' => '2',
-								'3' => '3',
-								'4' => '4',
-								'5' => '5',
-								'6' => '6',
-								'7' => '7',
-								'8' => '8',
-								'9' => '9',
-								'10' => '10',
-								'11' => '11',
-								'12' => '12',
-								'13' => '13',
-								'14' => '14',
-								'15' => '15',
-								'16' => '16',
-								'17' => '17',
-								'18' => '18');
+								'1' => '1. Atendido',
+								'2' => '2. Visita Fallida',
+								'3' => '3. No se evidenció el hogar');
 								break;
-								case "dotacion":
+								case "numeroEncuentos":
 								return array (
-									'1' => '1. Sí cuenta con dotación, según manual del Programa Buen Comienzo',
-									'2' => '2. Sí cuenta con dotación, pero no según manual del Programa Buen Comienzo',
-									'3' => '3. No cuenta con ningún tipo de dotación');
+									'0' => '0',
+									'1' => '1',
+									'2' => '2',
+									'3' => '3',
+									'4' => '4',
+									'5' => '5',
+									'6' => '6',
+									'7' => '7',
+									'8' => '8',
+									'9' => '9',
+									'10' => '10',
+									'11' => '11',
+									'12' => '12',
+									'13' => '13',
+									'14' => '14',
+									'15' => '15',
+									'16' => '16',
+									'17' => '17',
+									'18' => '18');
 									break;
-									case "asistenciatelefonica":
+									case "dotacion":
 									return array (
-										'1' => '1. Asiste',
-										'2' => '2. No contesta',
-										'4' => '4. Retirado',
-										'6' => '6. No asiste',
-										'7' => '7. Incapacitado',
-										'8' => '8. No cuenta con número telefónico');
+										'1' => '1. Sí cuenta con dotación, según manual del Programa Buen Comienzo',
+										'2' => '2. Sí cuenta con dotación, pero no según manual del Programa Buen Comienzo',
+										'3' => '3. No cuenta con ningún tipo de dotación');
 										break;
-										case "cargoitinerante":
+										case "asistenciatelefonica":
 										return array (
-											'1' => '1. Pedagogo',
-											'2' => '2. Psicosocial',
-											'3' => '3. Educador Físico',
-											'4' => '4. Nutricionista');
+											'1' => '1. Asiste',
+											'2' => '2. No contesta',
+											'4' => '4. Retirado',
+											'6' => '6. No asiste',
+											'7' => '7. Incapacitado',
+											'8' => '8. No cuenta con número telefónico');
 											break;
-											case "meses":
-											return array("Enero" => "Enero", "Febrero" => "Febrero", "Marzo" => "Marzo", "Abril" => "Abril", "Mayo" => "Mayo", "Junio" => "Junio", "Julio" => "Julio", "Agosto" => "Agosto", "Septiembre" => "Septiembre", "Octubre" => "Octubre", "Noviembre" => "Noviembre", "Diciembre" => "Diciembre");
-											break;
-											case "meses2":
-											return array("1" => "Enero", "2" => "Febrero", "3" => "Marzo", "4" => "Abril", "5" => "Mayo", "6" => "Junio", "7" => "Julio", "8" => "Agosto", "9" => "Septiembre", "10" => "Octubre", "11" => "Noviembre", "12" => "Diciembre");
-											break;
-											case "sino":
-											return array("1" => "Sí", "2" => "No");
-											break;
-											case "sinona":
-											return array("1" => "Sí", "2" => "No", "3" => "N/A");
-											break;
-											case "sinonare":
-											return array("1" => "Sí", "2" => "No", "3" => "N/A", "4" => "Retirado");
-											break;
-											case "ciclovital":
-											return array("1" => "G", "2" => "L", "4" => "N", "5" => "NM", "6" => "NG", "0" => "N/A");
-											break;
-											case "cargoth":
+											case "cargoitinerante":
 											return array (
-												'COORDINADOR PEDAGÓGICO' => 'COORDINADOR PEDAGÓGICO',
-												'AGENTE EDUCATIVO PSICOSOCIAL' => 'AGENTE EDUCATIVO PSICOSOCIAL',
-												'AGENTE EDUCATIVO NUTRICIONISTA' => 'AGENTE EDUCATIVO NUTRICIONISTA',
-												'AGENTE EDUCATIVO DOCENTE-LICENCIADO' => 'AGENTE EDUCATIVO DOCENTE-LICENCIADO',
-												'AGENTE EDUCATIVO DOCENTE-NORMALISTA' => 'AGENTE EDUCATIVO DOCENTE-NORMALISTA',
-												'AUXILIAR EDUCATIVO' => 'AUXILIAR EDUCATIVO',
-												'PERSONAL SERVICIOS GENERALES' => 'PERSONAL SERVICIOS GENERALES',
-												'AUXILIAR DE NUTRICIÓN' => 'AUXILIAR DE NUTRICIÓN',
-												'AUXILIAR ADMINISTRATIVO' => 'AUXILIAR ADMINISTRATIVO',
-												'INGENIERO DE ALIMENTOS' => 'INGENIERO DE ALIMENTOS',
-												'PROFESIONAL EN CIENCIA Y TECNOLOGÍA DE LOS ALIMENTOS' => 'PROFESIONAL EN CIENCIA Y TECNOLOGÍA DE LOS ALIMENTOS',
-												'PRACTICANTE DE NUTRICIÓN Y DIETÉTICA' => 'PRACTICANTE DE NUTRICIÓN Y DIETÉTICA',
-												'AUXILIAR DE ENFERMERÍA' => 'AUXILIAR DE ENFERMERÍA',
-												'ENFERMERO PROFESIONAL' => 'ENFERMERO PROFESIONAL'
-											);
-											break;
-											case "tipoContrato":
-											return array (
-												'VL' => 'VL',
-												'2' => 'PS');
+												'1' => '1. Pedagogo',
+												'2' => '2. Psicosocial',
+												'3' => '3. Educador Físico',
+												'4' => '4. Nutricionista');
 												break;
-												default:
-												return array();
-											}
-										}
-
-										/**
-										* Selects para formularios
-										*/
-										public function getCategoriaPermiso($id_categoria)
-										{
-											switch ($id_categoria) {
-												case "salida_pedagogica":
+												case "meses":
+												return array("Enero" => "Enero", "Febrero" => "Febrero", "Marzo" => "Marzo", "Abril" => "Abril", "Mayo" => "Mayo", "Junio" => "Junio", "Julio" => "Julio", "Agosto" => "Agosto", "Septiembre" => "Septiembre", "Octubre" => "Octubre", "Noviembre" => "Noviembre", "Diciembre" => "Diciembre");
+												break;
+												case "meses2":
+												return array("1" => "Enero", "2" => "Febrero", "3" => "Marzo", "4" => "Abril", "5" => "Mayo", "6" => "Junio", "7" => "Julio", "8" => "Agosto", "9" => "Septiembre", "10" => "Octubre", "11" => "Noviembre", "12" => "Diciembre");
+												break;
+												case "sino":
+												return array("1" => "Sí", "2" => "No");
+												break;
+												case "sinona":
+												return array("1" => "Sí", "2" => "No", "3" => "N/A");
+												break;
+												case "sinonare":
+												return array("1" => "Sí", "2" => "No", "3" => "N/A", "4" => "Retirado");
+												break;
+												case "ciclovital":
+												return array("1" => "G", "2" => "L", "4" => "N", "5" => "NM", "6" => "NG", "0" => "N/A");
+												break;
+												case "cargoth":
 												return array (
-													'titulo' => 'Nuevo Permiso - Salida Pedagógica',
-													'enlace' => $id_categoria,
-													'id' => '2');
+													'COORDINADOR PEDAGÓGICO' => 'COORDINADOR PEDAGÓGICO',
+													'AGENTE EDUCATIVO PSICOSOCIAL' => 'AGENTE EDUCATIVO PSICOSOCIAL',
+													'AGENTE EDUCATIVO NUTRICIONISTA' => 'AGENTE EDUCATIVO NUTRICIONISTA',
+													'AGENTE EDUCATIVO DOCENTE-LICENCIADO' => 'AGENTE EDUCATIVO DOCENTE-LICENCIADO',
+													'AGENTE EDUCATIVO DOCENTE-NORMALISTA' => 'AGENTE EDUCATIVO DOCENTE-NORMALISTA',
+													'AUXILIAR EDUCATIVO' => 'AUXILIAR EDUCATIVO',
+													'PERSONAL SERVICIOS GENERALES' => 'PERSONAL SERVICIOS GENERALES',
+													'AUXILIAR DE NUTRICIÓN' => 'AUXILIAR DE NUTRICIÓN',
+													'AUXILIAR ADMINISTRATIVO' => 'AUXILIAR ADMINISTRATIVO',
+													'INGENIERO DE ALIMENTOS' => 'INGENIERO DE ALIMENTOS',
+													'PROFESIONAL EN CIENCIA Y TECNOLOGÍA DE LOS ALIMENTOS' => 'PROFESIONAL EN CIENCIA Y TECNOLOGÍA DE LOS ALIMENTOS',
+													'PRACTICANTE DE NUTRICIÓN Y DIETÉTICA' => 'PRACTICANTE DE NUTRICIÓN Y DIETÉTICA',
+													'AUXILIAR DE ENFERMERÍA' => 'AUXILIAR DE ENFERMERÍA',
+													'ENFERMERO PROFESIONAL' => 'ENFERMERO PROFESIONAL'
+												);
+												break;
+												case "tipoContrato":
+												return array (
+													'VL' => 'VL',
+													'2' => 'PS');
 													break;
-													case "movilizacion_social":
-													return array (
-														'titulo' => 'Nuevo Permiso - Movilización Social',
-														'enlace' => $id_categoria,
-														'id' => '3');
-														break;
-														case "salida_ludoteka":
-														return array (
-															'titulo' => 'Nuevo Permiso - Salida a Ludoteka',
-															'enlace' => $id_categoria,
-															'id' => '4');
-															break;
-															default:
-															return array();
-														}
-													}
-													public function getCategoriaEnlace($id_categoria)
-													{
-														switch ($id_categoria) {
-															case "1":
-															return "incidente";
-															break;
-															case "5":
-															return "jornada_planeacion";
-															break;
-															case "6":
-															return "jornada_formacion";
-															break;
-															default:
-															return "general";
-														}
-													}
-													public function getCategoriaNombre($id_categoria)
-													{
-														switch ($id_categoria) {
-															case "1":
-															return "incidente";
-															break;
-															case "2":
-															return "salida_pedagogica";
-															break;
-															case "3":
-															return "movilizacion_social";
-															break;
-															case "4":
-															return "salida_ludoteka";
-															break;
-															case "5":
-															return "jornada_planeacion";
-															break;
-															case "6":
-															return "jornada_formacion";
-															break;
-														}
-													}
-													public function permiso($accion){
-														switch ($accion) {
-															case "aprobar_bc_salida":
-															return "Se recuerda a la entidad contar con los procedimientos de seguridad para estas salidas y garantizar la alimentación de los niños y las niñas como lo establece la minuta.";
-															case "aprobar_bc_jornada":
-															return "Se recuerda a la entidad informar a las familias sobre estas jornadas.";
-														}
-													}
-													public function texto_aprobar(){
-														return array(
-															"aprobar_salida" => "Se recuerda a la entidad contar con los procedimientos de seguridad para estas salidas y garantizar la alimentación de los niños y las niñas como lo establece la minuta.",
-															"aprobar_jornada" => "Se recuerda a la entidad informar a las familias sobre estas jornadas."
-														);
-													}
-													public function festivos(){
-														return "20/03/2016,21/03/2016,24/03/2016,25/03/2016,01/05/2016,09/05/2016,30/05/2016,06/06/2016,04/07/2016,20/07/2016,07/08/2016,15/08/2016,17/10/2016,07/11/2016,14/11/2016,08/12/2016,25/12/2016";
-													}
-													public function festivos_array(){
-														return array("2016-03-20", "2016-03-21", "2016-03-24", "2016-03-25", "2016-05-01", "2016-05-09", "2016-05-30", "2016-06-06", "2016-07-04", "2016-07-20", "2016-08-07", "2016-08-15", "2016-10-17", "2016-11-07", "2016-11-14", "2016-12-08", "2016-12-25");
-													}
+													default:
+													return array();
 												}
+											}
+
+											/**
+											* Selects para formularios
+											*/
+											public function getCategoriaPermiso($id_categoria)
+											{
+												switch ($id_categoria) {
+													case "salida_pedagogica":
+													return array (
+														'titulo' => 'Nuevo Permiso - Salida Pedagógica',
+														'enlace' => $id_categoria,
+														'id' => '2');
+														break;
+														case "movilizacion_social":
+														return array (
+															'titulo' => 'Nuevo Permiso - Movilización Social',
+															'enlace' => $id_categoria,
+															'id' => '3');
+															break;
+															case "salida_ludoteka":
+															return array (
+																'titulo' => 'Nuevo Permiso - Salida a Ludoteka',
+																'enlace' => $id_categoria,
+																'id' => '4');
+																break;
+																default:
+																return array();
+															}
+														}
+														public function getCategoriaEnlace($id_categoria)
+														{
+															switch ($id_categoria) {
+																case "1":
+																return "incidente";
+																break;
+																case "5":
+																return "jornada_planeacion";
+																break;
+																case "6":
+																return "jornada_formacion";
+																break;
+																default:
+																return "general";
+															}
+														}
+														public function getCategoriaNombre($id_categoria)
+														{
+															switch ($id_categoria) {
+																case "1":
+																return "incidente";
+																break;
+																case "2":
+																return "salida_pedagogica";
+																break;
+																case "3":
+																return "movilizacion_social";
+																break;
+																case "4":
+																return "salida_ludoteka";
+																break;
+																case "5":
+																return "jornada_planeacion";
+																break;
+																case "6":
+																return "jornada_formacion";
+																break;
+															}
+														}
+														public function permiso($accion){
+															switch ($accion) {
+																case "aprobar_bc_salida":
+																return "Se recuerda a la entidad contar con los procedimientos de seguridad para estas salidas y garantizar la alimentación de los niños y las niñas como lo establece la minuta.";
+																case "aprobar_bc_jornada":
+																return "Se recuerda a la entidad informar a las familias sobre estas jornadas.";
+															}
+														}
+														public function texto_aprobar(){
+															return array(
+																"aprobar_salida" => "Se recuerda a la entidad contar con los procedimientos de seguridad para estas salidas y garantizar la alimentación de los niños y las niñas como lo establece la minuta.",
+																"aprobar_jornada" => "Se recuerda a la entidad informar a las familias sobre estas jornadas."
+															);
+														}
+														public function festivos(){
+															return "20/03/2016,21/03/2016,24/03/2016,25/03/2016,01/05/2016,09/05/2016,30/05/2016,06/06/2016,04/07/2016,20/07/2016,07/08/2016,15/08/2016,17/10/2016,07/11/2016,14/11/2016,08/12/2016,25/12/2016";
+														}
+														public function festivos_array(){
+															return array("2016-03-20", "2016-03-21", "2016-03-24", "2016-03-25", "2016-05-01", "2016-05-09", "2016-05-30", "2016-06-06", "2016-07-04", "2016-07-20", "2016-08-07", "2016-08-15", "2016-10-17", "2016-11-07", "2016-11-14", "2016-12-08", "2016-12-25");
+														}
+													}

@@ -14,13 +14,13 @@ class CobActatelefonicaPersona extends \Phalcon\Mvc\Model
      * @var integer
      */
     public $id_actatelefonica;
-    
+
     /**
      *
      * @var integer
      */
     public $id_verificacion;
-    
+
     /**
      *
      * @var string
@@ -73,6 +73,12 @@ class CobActatelefonicaPersona extends \Phalcon\Mvc\Model
      *
      * @var string
      */
+    public $beneficiarioCelular;
+
+    /**
+     *
+     * @var string
+     */
     public $personaContesta;
 
     /**
@@ -80,13 +86,13 @@ class CobActatelefonicaPersona extends \Phalcon\Mvc\Model
      * @var string
      */
     public $parentesco;
-    
+
     /**
      *
      * @var string
      */
     public $observacion;
-    
+
     //Virtual Foreign Key para poder acceder a la fecha de corte del acta
     public function initialize()
     {
@@ -94,7 +100,20 @@ class CobActatelefonicaPersona extends \Phalcon\Mvc\Model
     			'reusable' => true
     	));
     }
-    
+
+    public function getTelefonoBeneficiario()
+    {
+      $db = $this->getDI()->getDb();
+  		$config = $this->getDI()->getConfig();
+      $info_beneficiario = $db->query("SELECT cob_actaconteo_persona_excusa.telefono FROM cob_actaconteo_persona_excusa, cob_actaconteo_persona WHERE cob_actaconteo_persona.id_actaconteo_persona =  cob_actaconteo_persona_excusa.id_actaconteo_persona and cob_actaconteo_persona.id_persona = '$this->id_persona'");
+      $info_beneficiario->setFetchMode(Phalcon\Db::FETCH_OBJ);
+      $telefono = '';
+      foreach ($info_beneficiario->fetchAll() as $key => $row) {
+        $telefono = $row->telefono;
+      }
+      return $telefono;
+    }
+
     /**
      * Returns a human representation of 'estado'
      *

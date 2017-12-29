@@ -68,6 +68,10 @@
 				<td>1.6 LLAMADA TELEFÓNICA NO CERTIFICADA</td>
 				<td>{{ asiste6 }}</td>
 			</tr>
+			<tr>
+	<td>1.7 ENCUENTRO EN CASA</td>
+	<td>{{ asiste7 }}</td>
+</tr>
             {% endif %}
 		</tbody>
 	</table>

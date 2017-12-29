@@ -19,11 +19,10 @@
 			</p>
 			<p style="color:#636363;font-size: 12px;font-family:'HelveticaNeue','Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:normal;">
 			Interventoría Buen Comienzo<br>
-			Calle 52 (av. La Playa) # 49-27, edificio Santa Elena piso 14, Medellín (Antioquia)<br>
+			Calle 52 (av. La Playa) # 49-27, edificio Santa Helena piso 14, Medellín (Antioquia)<br>
 			Horario: lunes a viernes 8:00 am - 11:45 am; 1:30 pm - 4:30 pm<br>
 			PBX: (4) 5121233. Email: info@interventoriabuencomienzo.org
 			</p>
 		</td>
 	</tr>
 </tbody>
-

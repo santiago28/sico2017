@@ -134,7 +134,7 @@ class CobActadocumentacion extends \Phalcon\Mvc\Model
     	}
     	$acta_id = "AVD-03-". date("Y") . sprintf('%05d', $acta->id_actadocumentacion);
     	$encabezado = "<div class='seccion encabezado'>
-    	<div class='fila center'><div>ACTA DE VERIFICACIÓN FÍSICA DE LAS CARPETAS DE LOS BENEFICIARIOS REPORTADOS EN EL SIBC<br>INTERVENTORÍA BUEN COMIENZO</div></div>
+    	<div class='fila center'><div style='margin-left:20%'>ACTA DE VERIFICACIÓN FÍSICA DE LAS CARPETAS DE LOS BENEFICIARIOS REPORTADOS EN EL SIBC<br>INTERVENTORÍA BUEN COMIENZO</div></div>
     	<div class='fila col3 center'><div>Código: F-ITBC-GC-001</div><div></div><div></div></div>
     	<div class='fila col3e'>
     	<div>ACTA: <span style='font-weight: normal;'>$acta_id</span></div>
@@ -191,7 +191,7 @@ class CobActadocumentacion extends \Phalcon\Mvc\Model
         $j = 1;
       			$encabezado_beneficiarios = "<div class='seccion' id='listado_beneficiarios'>
       			<div class='fila center bold'><div style='border:none; width: 100%'>4. LISTADO DE BENEFICIARIOS REPORTADOS EN EL SISTEMA DE INFORMACIÓN DE BUEN COMIENZO</div></div>
-      			<div class='fila colb2 encabezadodoc'><div style='width: 2%;'>#</div><div style='width: 10%;'>4.1 DOCUMENTO</div><div style='width: 15%'>4.2 NOMBRE COMPLETO</div><div style='width: 10%'>4.3 GRUPO</div><div style='width: 10%'>4.4 TELÉFONO O CELULAR</div><div style='width: 9%'>4.5 Nombre y Nuip coinciden con SIBC</div><div style='width: 9%'>4.6 Teléfono o Celular coincide con SIBC</div><div style='width: 9%'>4.7  Certificado Sistema General Salud</div><div style='width: 9%'>4.8  Certificado Sisben</div><div style='width: 9%'>4.9 Certificado Formato Matrícula Firmada</div><div style='width: 8%'>4.10 Fecha Matrícula Diligenciada</div></div>";
+      			<div class='fila colb2 encabezadodoc'><div style='width: 2%;'>#</div><div style='width: 8%; font-size: 0.7em;'>4.1 DOCUMENTO</div><div style='width: 17%; font-size: 0.7em;'>4.2 NOMBRE COMPLETO</div><div style='width: 10%; font-size: 0.7em;'>4.3 GRUPO</div><div style='width: 10%; font-size: 0.7em;'>4.4 TELÉFONO O CELULAR</div><div style='width: 9%; font-size: 0.7em;'>4.5 Nombre y Nuip coinciden con SIBC</div><div style='width: 9%; font-size: 0.7em;'>4.6 Teléfono o Celular coincide con SIBC</div><div style='width: 9%; font-size: 0.7em;'>4.7  Certificado Sistema General Salud</div><div style='width: 9%; font-size: 0.7em;'>4.8  Certificado Sisben</div><div style='width: 9%; font-size: 0.7em;'>4.9 Certificado Formato Matrícula Firmada</div><div style='width: 8%; font-size: 0.7em;'>4.10 Fecha Matrícula Diligenciada</div></div>";
       			$html .= $encabezado;
       			$html .= $encabezado_beneficiarios;
       			foreach($acta->getCobActadocumentacionPersona(['order' => 'grupo, primerNombre asc']) as $row){
@@ -211,7 +211,7 @@ class CobActadocumentacion extends \Phalcon\Mvc\Model
   				$html .= $encabezado;
       						$html .= $encabezado_beneficiarios;
       					}
-      					$html .="<div class='fila colb2'><div style='width: 2%;'>$i</div><div style='width: 10%;'>$row->numDocumento</div><div style='width: 15%'>$nombre_completo</div><div style='width: 10%;'>$row->grupo</div><div style='width: 10%;'>$row->beneficiarioTelefono $espacio $row->beneficiarioCelular</div><div style='width: 9%'></div><div style='width: 9%'></div><div style='width: 9%'></div><div style='width: 9%'></div><div style='width: 9%'></div><div style='width: 8%'></div></div>";
+      					$html .="<div class='fila colb2'><div style='width: 2%;'>$i</div><div style='width: 8%; font-size: 0.8em;'>$row->numDocumento</div><div style='width: 17%; font-size: 0.8em;'>$nombre_completo</div><div style='width: 10%; font-size: 0.8em;'>$row->grupo</div><div style='width: 10%; font-size: 0.8em;'>$row->beneficiarioTelefono $espacio $row->beneficiarioCelular</div><div style='width: 9%'></div><div style='width: 9%'></div><div style='width: 9%'></div><div style='width: 9%'></div><div style='width: 9%'></div><div style='width: 8%'></div></div>";
       					$i++;
       					$j++;
       			}

@@ -153,6 +153,9 @@ class CobActaconteoPersona extends \Phalcon\Mvc\Model
     		case 5:
     			return " class='success'";
     			break;
+        case 7:
+          return " class='info'";
+          break;
     		default:
     			return "";
     			break;

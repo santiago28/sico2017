@@ -144,6 +144,138 @@ class CobActaconteo extends \Phalcon\Mvc\Model
 		));
 	}
 
+
+	public function getRetirados(){
+		$db = $this->getDI()->getDb();
+		$config = $this->getDI()->getConfig();
+		//$id_carga = $this->id_carga;
+		$periodo = $db->query("SELECT id_periodo, id_carga_facturacion FROM cob_periodo WHERE id_periodo = '$this->id_periodo'");
+		$periodo->setFetchMode(Phalcon\Db::FETCH_OBJ);
+		foreach($periodo->fetchAll() as $key => $row){
+			$id_carga = $row->id_carga_facturacion;
+		}
+		$carga = BcCarga::findFirstByid_carga($id_carga);
+		$timestamp = new DateTime();
+		$tabla_mat = "m" . $timestamp->getTimestamp();
+		$tabla_pp = "pp" . $timestamp->getTimestamp();
+		$archivo_mat = $config->application->basePath . "public/files/bc_bd/" . $carga->nombreMat;
+		$db->query("CREATE TEMPORARY TABLE $tabla_pp (id_matricula INT, fecha_inicio_atencion varchar(70), fecha_retiro varchar(70), motivo_retiro varchar (100)) CHARACTER SET utf8 COLLATE utf8_bin");
+		$db->query("LOAD DATA INFILE '$archivo_mat' IGNORE INTO TABLE $tabla_pp FIELDS TERMINATED BY ';' LINES TERMINATED BY '\n' IGNORE 1 LINES (@ID_MATRICULA, @FECHA_INCIO_ATENCION, @FECHA_RETIRO, @MOTIVO_RETIRO) SET id_matricula = @ID_MATRICULA, fecha_inicio_atencion = @FECHA_INCIO_ATENCION, fecha_retiro = @FECHA_RETIRO, motivo_retiro = @MOTIVO_RETIRO");
+		$db->query("CREATE TEMPORARY TABLE $tabla_mat (id_matricula INT, fecha_inicio_atencion varchar(70), fecha_retiro varchar(70), motivo_retiro varchar (100)) CHARACTER SET utf8 COLLATE utf8_bin");
+		$db->query("INSERT IGNORE INTO $tabla_mat (id_matricula, motivo_retiro) SELECT id_matricula, motivo_retiro FROM $tabla_pp");
+		$registros = $db->query("SELECT $tabla_mat.id_matricula, $tabla_mat.motivo_retiro FROM $tabla_mat WHERE $tabla_mat.motivo_retiro != ''");
+		$registros->setFetchMode(Phalcon\Db::FETCH_OBJ);
+		$rows = $registros->numRows();
+		foreach($registros->fetchAll() as $key2 => $row2){
+			$motivo = $row2->motivo_retiro;
+		}
+		$db->query("DROP TABLE $tabla_mat");
+		$db->query("DROP TABLE $tabla_pp");
+		return $rows;
+	}
+
+	public function getRetiradosFamiliar(){
+		$db = $this->getDI()->getDb();
+		$config = $this->getDI()->getConfig();
+		//$id_carga = $this->id_carga;
+		$periodo = $db->query("SELECT id_periodo, id_carga_facturacion FROM cob_periodo WHERE id_periodo = '$this->id_periodo'");
+		$periodo->setFetchMode(Phalcon\Db::FETCH_OBJ);
+		foreach($periodo->fetchAll() as $key => $row){
+			$id_carga = $row->id_carga_facturacion;
+		}
+		$carga = BcCarga::findFirstByid_carga($id_carga);
+		$timestamp = new DateTime();
+		$tabla_mat = "m" . $timestamp->getTimestamp();
+		$tabla_pp = "pp" . $timestamp->getTimestamp();
+		$archivo_mat = $config->application->basePath . "public/files/bc_bd/" . $carga->nombreMat;
+		$db->query("CREATE TEMPORARY TABLE $tabla_pp (id_matricula INT, fecha_inicio_atencion varchar(70), fecha_retiro varchar(70), motivo_retiro varchar (100), fecha_registro_matricula varchar(100), id_prestador INT, prestador_servicio varchar(100), numero_contrato varchar (100)) CHARACTER SET utf8 COLLATE utf8_bin");
+		$db->query("LOAD DATA INFILE '$archivo_mat' IGNORE INTO TABLE $tabla_pp FIELDS TERMINATED BY ';' LINES TERMINATED BY '\n' IGNORE 1 LINES (@ID_MATRICULA, @FECHA_INCIO_ATENCION, @FECHA_RETIRO, @MOTIVO_RETIRO, @FECHA_REGISTRO_MATRICULA, @ID_PRESTADOR, @PRESTADOR_SERVICIO, @NUMERO_CONTRATO) SET id_matricula = @ID_MATRICULA, fecha_inicio_atencion = @FECHA_INCIO_ATENCION, fecha_retiro = @FECHA_RETIRO, motivo_retiro = @MOTIVO_RETIRO, fecha_registro_matricula = @FECHA_REGISTRO_MATRICULA, id_prestador = @ID_PRESTADOR, prestador_servicio = @PRESTADOR_SERVICIO, numero_contrato = @NUMERO_CONTRATO");
+		$db->query("CREATE TEMPORARY TABLE $tabla_mat (id_matricula INT, fecha_inicio_atencion varchar(70), fecha_retiro varchar(70), motivo_retiro varchar (100), fecha_registro_matricula varchar(100), id_prestador INT, prestador_servicio varchar(100), numero_contrato varchar (100)) CHARACTER SET utf8 COLLATE utf8_bin");
+		$db->query("INSERT IGNORE INTO $tabla_mat (id_matricula, motivo_retiro, numero_contrato) SELECT id_matricula, motivo_retiro, numero_contrato FROM $tabla_pp");
+		if ($this->id_contrato == "4600070609") {
+			$registros = $db->query("SELECT $tabla_mat.id_matricula, $tabla_mat.motivo_retiro FROM $tabla_mat WHERE $tabla_mat.motivo_retiro != '' and $tabla_mat.numero_contrato = 4600070609");
+		}elseif ($this->id_contrato == "4600070577") {
+			$registros = $db->query("SELECT $tabla_mat.id_matricula, $tabla_mat.motivo_retiro FROM $tabla_mat WHERE $tabla_mat.motivo_retiro != '' and $tabla_mat.numero_contrato = 4600070577");
+		}elseif ($this->id_contrato == "4600070578") {
+			$registros = $db->query("SELECT $tabla_mat.id_matricula, $tabla_mat.motivo_retiro FROM $tabla_mat WHERE $tabla_mat.motivo_retiro != '' and $tabla_mat.numero_contrato = 4600070578");
+		}
+		//$registros = $db->query("SELECT $tabla_mat.id_matricula, $tabla_mat.motivo_retiro FROM $tabla_mat WHERE $tabla_mat.motivo_retiro != ''");
+		$registros->setFetchMode(Phalcon\Db::FETCH_OBJ);
+		$rows = $registros->numRows();
+		foreach($registros->fetchAll() as $key2 => $row2){
+			$motivo = $row2->motivo_retiro;
+		}
+		$db->query("DROP TABLE $tabla_mat");
+		$db->query("DROP TABLE $tabla_pp");
+		return $rows;
+	}
+
+	public function getCuposActivos(){
+		$db = $this->getDI()->getDb();
+		$config = $this->getDI()->getConfig();
+		//$id_carga = $this->id_carga;
+		$periodo = $db->query("SELECT id_periodo, id_carga_facturacion FROM cob_periodo WHERE id_periodo = '$this->id_periodo'");
+		$periodo->setFetchMode(Phalcon\Db::FETCH_OBJ);
+		foreach($periodo->fetchAll() as $key => $row){
+			$id_carga = $row->id_carga_facturacion;
+		}
+		$carga = BcCarga::findFirstByid_carga($id_carga);
+		$timestamp = new DateTime();
+		$tabla_mat = "m" . $timestamp->getTimestamp();
+		$tabla_pp = "pp" . $timestamp->getTimestamp();
+		$archivo_mat = $config->application->basePath . "public/files/bc_bd/" . $carga->nombreMat;
+		$db->query("CREATE TEMPORARY TABLE $tabla_pp (id_matricula INT, fecha_inicio_atencion varchar(70), fecha_retiro varchar(70), motivo_retiro varchar (100)) CHARACTER SET utf8 COLLATE utf8_bin");
+		$db->query("LOAD DATA INFILE '$archivo_mat' IGNORE INTO TABLE $tabla_pp FIELDS TERMINATED BY ';' LINES TERMINATED BY '\n' IGNORE 1 LINES (@ID_MATRICULA, @FECHA_INCIO_ATENCION, @FECHA_RETIRO, @MOTIVO_RETIRO) SET id_matricula = @ID_MATRICULA, fecha_inicio_atencion = @FECHA_INCIO_ATENCION, fecha_retiro = @FECHA_RETIRO, motivo_retiro = @MOTIVO_RETIRO");
+		$db->query("CREATE TEMPORARY TABLE $tabla_mat (id_matricula INT, fecha_inicio_atencion varchar(70), fecha_retiro varchar(70), motivo_retiro varchar (100)) CHARACTER SET utf8 COLLATE utf8_bin");
+		$db->query("INSERT IGNORE INTO $tabla_mat (id_matricula, motivo_retiro) SELECT id_matricula, motivo_retiro FROM $tabla_pp");
+		$registros = $db->query("SELECT $tabla_mat.id_matricula, $tabla_mat.motivo_retiro FROM $tabla_mat WHERE $tabla_mat.motivo_retiro = ''");
+		$registros->setFetchMode(Phalcon\Db::FETCH_OBJ);
+		$rows = $registros->numRows();
+		foreach($registros->fetchAll() as $key2 => $row2){
+			$motivo = $row2->motivo_retiro;
+		}
+		$db->query("DROP TABLE $tabla_mat");
+		$db->query("DROP TABLE $tabla_pp");
+		return $rows;
+	}
+
+	public function getCuposActivosFamiliar(){
+		$db = $this->getDI()->getDb();
+		$config = $this->getDI()->getConfig();
+		//$id_carga = $this->id_carga;
+		$periodo = $db->query("SELECT id_periodo, id_carga_facturacion FROM cob_periodo WHERE id_periodo = '$this->id_periodo'");
+		$periodo->setFetchMode(Phalcon\Db::FETCH_OBJ);
+		foreach($periodo->fetchAll() as $key => $row){
+			$id_carga = $row->id_carga_facturacion;
+		}
+		$carga = BcCarga::findFirstByid_carga($id_carga);
+		$timestamp = new DateTime();
+		$tabla_mat = "m" . $timestamp->getTimestamp();
+		$tabla_pp = "pp" . $timestamp->getTimestamp();
+		$archivo_mat = $config->application->basePath . "public/files/bc_bd/" . $carga->nombreMat;
+		$db->query("CREATE TEMPORARY TABLE $tabla_pp (id_matricula INT, fecha_inicio_atencion varchar(70), fecha_retiro varchar(70), motivo_retiro varchar (100), fecha_registro_matricula varchar(100), id_prestador INT, prestador_servicio varchar(100), numero_contrato varchar (100)) CHARACTER SET utf8 COLLATE utf8_bin");
+		$db->query("LOAD DATA INFILE '$archivo_mat' IGNORE INTO TABLE $tabla_pp FIELDS TERMINATED BY ';' LINES TERMINATED BY '\n' IGNORE 1 LINES (@ID_MATRICULA, @FECHA_INCIO_ATENCION, @FECHA_RETIRO, @MOTIVO_RETIRO, @FECHA_REGISTRO_MATRICULA, @ID_PRESTADOR, @PRESTADOR_SERVICIO, @NUMERO_CONTRATO) SET id_matricula = @ID_MATRICULA, fecha_inicio_atencion = @FECHA_INCIO_ATENCION, fecha_retiro = @FECHA_RETIRO, motivo_retiro = @MOTIVO_RETIRO, fecha_registro_matricula = @FECHA_REGISTRO_MATRICULA, id_prestador = @ID_PRESTADOR, prestador_servicio = @PRESTADOR_SERVICIO, numero_contrato = @NUMERO_CONTRATO");
+		$db->query("CREATE TEMPORARY TABLE $tabla_mat (id_matricula INT, fecha_inicio_atencion varchar(70), fecha_retiro varchar(70), motivo_retiro varchar (100), fecha_registro_matricula varchar(100), id_prestador INT, prestador_servicio varchar(100), numero_contrato varchar (100)) CHARACTER SET utf8 COLLATE utf8_bin");
+		$db->query("INSERT IGNORE INTO $tabla_mat (id_matricula, motivo_retiro, numero_contrato) SELECT id_matricula, motivo_retiro, numero_contrato FROM $tabla_pp");
+		if ($this->id_contrato == "4600070609") {
+			$registros = $db->query("SELECT $tabla_mat.id_matricula, $tabla_mat.motivo_retiro FROM $tabla_mat WHERE $tabla_mat.motivo_retiro = '' and $tabla_mat.numero_contrato = 4600070609");
+		}elseif ($this->id_contrato == "4600070577") {
+			$registros = $db->query("SELECT $tabla_mat.id_matricula, $tabla_mat.motivo_retiro FROM $tabla_mat WHERE $tabla_mat.motivo_retiro = '' and $tabla_mat.numero_contrato = 4600070577");
+		}elseif ($this->id_contrato == "4600070578") {
+			$registros = $db->query("SELECT $tabla_mat.id_matricula, $tabla_mat.motivo_retiro FROM $tabla_mat WHERE $tabla_mat.motivo_retiro = '' and $tabla_mat.numero_contrato = 4600070578");
+		}
+
+		//$registros = $db->query("SELECT $tabla_mat.id_matricula, $tabla_mat.motivo_retiro FROM $tabla_mat WHERE $tabla_mat.motivo_retiro = ''");
+		$registros->setFetchMode(Phalcon\Db::FETCH_OBJ);
+		$rows = $registros->numRows();
+		foreach($registros->fetchAll() as $key2 => $row2){
+			$motivo = $row2->motivo_retiro;
+		}
+		$db->query("DROP TABLE $tabla_mat");
+		$db->query("DROP TABLE $tabla_pp");
+		return $rows;
+	}
+
 	public function generarActasRcarga($cob_periodo, $carga, $facturacion, $recorrido_anterior) {
 		$recorrido = $recorrido_anterior + 1;
 		$db = $this->getDI()->getDb();
@@ -222,7 +354,7 @@ class CobActaconteo extends \Phalcon\Mvc\Model
 			$eliminar = CobActaconteoPersona::find(["id_periodo = $cob_periodo->id_periodo AND recorrido < $recorrido AND (asistencia = 1 OR asistencia = 7 OR asistencia = 9 OR asistencia = 10)"]);
 		}
 		else {
-			$eliminar = CobActaconteoPersona::find(["id_periodo = $cob_periodo->id_periodo AND recorrido < $recorrido AND (asistencia = 1 OR asistencia = 4 OR asistencia = 5)"]);
+			$eliminar = CobActaconteoPersona::find(["id_periodo = $cob_periodo->id_periodo AND recorrido < $recorrido AND (asistencia = 1 OR asistencia = 4 OR asistencia = 5 OR asistencia = 7)"]);
 		}
 		if(count($eliminar) > 0){
 			$sql = "DELETE FROM $tabla_mat WHERE CONCAT_WS('-',id_contrato,numDocumento) IN (";
@@ -544,6 +676,7 @@ if($acta->id_modalidad == 5){ // ENTORNO FAMILIAR
 		<div class='fila'><div>1.3 AUSENTE</div></div>
 		<div class='fila'><div>1.4 BENEFICIARIO CON EXCUSA VALIDA</div></div>
 		<div class='fila'><div>1.5 GESTIÓN TELEFÓNICA CERTIFICADA</div></div>
+		<div class='fila'><div>1.6 LLAMADA TELEFÓNICA NO CERTIFICADA</div></div>
 		<div class='fila visitavirtual'><div>1.7 ENCUENTRO EN CASA</div></div>
 		<div class='clear'></div>
 		</div>";
@@ -590,6 +723,22 @@ if ($acta->id_modalidad == 5) {
 		$html .= "<div class='paginacion'>PÁGINA DEL PRESTADOR</div>";
 		//Página en blanco para impresión a doble cara
 		$html .= "<div class='seccion encabezado' style='border: none'></div>";
+	}else {
+		$html .= "<div class='visitapresencial1'>";
+		$html .= $encabezado;
+		$html .= $totalizacion_asistencia;
+		$html .= "
+		<div class='seccion' id='datos_generales'>
+		<div class='fila center bold'><div style='border:none; width: 100%'>2. DATOS GENERALES</div></div>
+		<div class='fila col3'><div>2.1 FECHA INTERVENTORÍA:</div><div>2.2 HORA INICIO INTERVENTORÍA:</div><div>2.3 HORA FIN INTERVENTORÍA:</div></div>
+		<div class='clear'></div>
+		</div>";
+		$html .= $pie_pagina;
+
+		$html .= "<div class='paginacion'>PÁGINA DEL PRESTADOR</div>";
+		//Página en blanco para impresión a doble cara
+		$html .= "<div class='seccion encabezado' style='border: none'></div>";
+		$html .="</div>";
 	}
 }else {
 	$html .= $encabezado;
@@ -620,30 +769,71 @@ $html .= $encabezado;
 $html .= $totalizacion_asistencia;
 
 if($acta->id_modalidad == 5){ // ENTORNO FAMILIAR
-	$html .= "
-	<div class='seccion' id='datos_generales'>
-	<div class='fila center bold'><div style='border:none; width: 100%'>2. DATOS GENERALES</div></div>
-	<div class='fila col3'>
-	<div>2.1 FECHA INTERVENTORÍA:</div>
-	<div>2.2 HORA INICIO INTERVENTORÍA:</div>
-	<div>2.3 HORA FIN INTERVENTORÍA:</div>
-	</div>
-	<div class='fila col2'>
-	<div style='width: 55%;'>2.4 NOMBRE ENCARGADO DEL ENCUENTRO:</div>
-	<div style='width: 40%;'>2.5 NOMBRE INTERVENTOR:</div>
-	</div>
-	<div class='fila col2'>
-	<div>2.6 CUENTA CON VALLA DE IDENTIFICACIÓN:</div>
-	<div>2.7 CORRECCIÓN DIRECCIÓN:</div>
-	</div>
-	<div class='clear'></div>
-	</div>
-	<div class='seccion' id='observaciones'>
-	<div class='fila center bold'><div style='border:none; width: 100%'>3. OBSERVACIONES AL MOMENTO DE LA INTERVENTORÍA</div></div>
-	<div class='fila observacion'><div>3.1 OBSERVACIÓN DEL INTERVENTOR:$aiepi</div></div>
-	<div class='fila observacion'><div>3.2 OBSERVACIÓN DEL ENCARGADO DE LA SEDE:</div></div>
-	<div class='clear'></div>
-	</div>";
+	if ($acta->recorrido == 1) {
+		$html .= "
+		<div class='seccion' id='datos_generales'>
+		<div class='fila center bold'><div style='border:none; width: 100%'>2. DATOS GENERALES</div></div>
+		<div class='fila col3'>
+		<div>2.1 FECHA INTERVENTORÍA:</div>
+		<div>2.2 HORA INICIO INTERVENTORÍA:</div>
+		<div>2.3 HORA FIN INTERVENTORÍA:</div>
+		</div>
+		<div class='fila col2'>
+		<div style='width: 55%;'>2.4 NOMBRE ENCARGADO DEL ENCUENTRO:</div>
+		<div style='width: 40%;'>2.5 NOMBRE INTERVENTOR:</div>
+		</div>
+		<div class='fila col2'>
+		<div>2.6 CUENTA CON VALLA DE IDENTIFICACIÓN:</div>
+		<div>2.7 CORRECCIÓN DIRECCIÓN:</div>
+		</div>
+		<div class='clear'></div>
+		</div>
+		<div class='seccion' id='observaciones'>
+		<div class='fila center bold'><div style='border:none; width: 100%'>3. OBSERVACIONES AL MOMENTO DE LA INTERVENTORÍA</div></div>
+		<div class='fila observacion'><div>3.1 OBSERVACIÓN DEL INTERVENTOR:$aiepi</div></div>
+		<div class='fila observacion'><div>3.2 OBSERVACIÓN DEL ENCARGADO DE LA SEDE:</div></div>
+		<div class='clear'></div>
+		</div>";
+	}else {
+		$html .= "
+		<div class='seccion visitapresencial1' id='datos_generales'>
+			<div class='fila center bold'>
+				<div style='border:none; width: 100%'>2. DATOS GENERALES</div>
+			</div>
+			<div class='fila col3'>
+				<div>2.1 FECHA INTERVENTORÍA:</div>
+				<div>2.2 HORA INICIO INTERVENTORÍA:</div>
+				<div>2.3 HORA FIN INTERVENTORÍA:</div>
+			</div>
+			<div class='fila col2'>
+				<div style='width: 55%;'>2.4 NOMBRE ENCARGADO DEL ENCUENTRO:</div>
+				<div style='width: 40%;'>2.5 NOMBRE INTERVENTOR:</div>
+			</div>
+			<div class='fila col2'>
+				<div>2.6 CUENTA CON VALLA DE IDENTIFICACIÓN:</div>
+				<div>2.7 CORRECCIÓN DIRECCIÓN:</div>
+			</div>
+			<div class='clear'></div>
+		</div>
+		<div class='seccion visitavirtual1' id=''>
+			<div class='fila center bold'>
+				<div style='border:none; width: 100%'>2. DATOS GENERALES</div>
+			</div>
+			<div class='fila col3'>
+				<div style='width: 50%;'>2.1 FECHA INTERVENTORÍA:</div>
+				<div style='width: 50%;'>2.2 NOMBRE INTERVENTOR:</div>
+			</div>
+			<div class='clear'></div>
+		</div>
+		<div class='seccion' id='observaciones'>
+		<div class='fila center bold'><div style='border:none; width: 100%'>3. OBSERVACIONES AL MOMENTO DE LA INTERVENTORÍA</div></div>
+		<div class='fila observacion visitapresencial1'><div>3.1 OBSERVACIÓN DEL INTERVENTOR:$aiepi</div></div>
+		<div class='fila observacion visitapresencial1'><div>3.2 OBSERVACIÓN DEL ENCARGADO DE LA SEDE:</div></div>
+		<div class='fila observacion3 visitavirtual1'><div>3.1 OBSERVACIÓN DEL INTERVENTOR:$aiepi</div></div>
+		<div class='clear'></div>
+		</div>";
+	}
+
 }
 else
 {
@@ -787,7 +977,7 @@ if($acta->id_modalidad == 12){
 		$nombre_completo = array($row->primerNombre, $row->segundoNombre, $row->primerApellido, $row->segundoApellido);
 		$nombre_completo = implode(" ", $nombre_completo);
 		$i = ($i<10) ? "0" .$i : $i;
-		if($j == 31){
+		if($j == 28){
 			$j = 1;
 			$p++;
 			$html .= "<div class='clear'></div></div>* Niños mayores o iguales a 5 añoss" . $pie_pagina;
@@ -853,8 +1043,19 @@ if($acta->id_modalidad == 12){
 			$html .= $encabezado;
 			if($acta->id_modalidad == 5){ // ENTORNO FAMILIAR
 				$html .= "<div class='seccion' id='listado_beneficiarios'>
-				<div class='fila center bold'><div style='border:none; width: 100%'>5. LISTADO DE BENEFICIARIOS ADICIONALES A LOS REPORTADOS EN EL SISTEMA DE INFORMACIÓN DE BUEN COMIENZO</div></div>
-				<div class='fila colb'><div style='width: 5%;'>#</div><div style='width: 15%;'>5.1 DOCUMENTO</div><div style='width: 30%;'>5.2 NOMBRE COMPLETO</div><div style='width: 10%;'>5.3 GRUPO</div><div style='width: 10%;'><span style='font-size: 8px !important;'>5.4 FECHA ENCUENTRO</span></div><div style='width: 10%;'><span style='font-size: 8px !important;'>5.5 HORA ENCUENTRO</span></div><div style='width: 10%;'><span style='font-size: 8px !important;'>5.6 TIPO ENCUENTRO</span></div><div style='width: 10%;'>5.7 ASISTENCIA</div>$fecha_encabezado2</div>";
+				<div class='fila center bold'>
+					<div style='border:none; width: 100%'>5. LISTADO DE BENEFICIARIOS ADICIONALES A LOS REPORTADOS EN EL SISTEMA DE INFORMACIÓN DE BUEN COMIENZO</div>
+				</div>
+				<div class='fila colb'>
+					<div style='width: 5%;'>#</div>
+					<div style='width: 15%;'>5.1 DOCUMENTO</div>
+					<div style='width: 30%;'>5.2 NOMBRE COMPLETO</div>
+					<div style='width: 10%;'>5.3 GRUPO</div>
+					<div style='width: 10%;'><span style='font-size: 8px !important;'>5.4 FECHA ENCUENTRO</span></div>
+					<div style='width: 10%;'><span style='font-size: 8px !important;'>5.5 HORA ENCUENTRO</span></div>
+					<div style='width: 10%;'><span style='font-size: 8px !important;'>5.6 TIPO ENCUENTRO</span></div>
+					<div style='width: 10%;'>5.7 ASISTENCIA</div>
+				$fecha_encabezado2</div>";
 			}
 			else
 			{
@@ -875,6 +1076,38 @@ if($acta->id_modalidad == 12){
 			$p++;
 			$html .= "<div class='clear'></div></div>" . $pie_pagina;
 			$html .= "<div class='paginacion'>PÁGINA $p</div>";
+		}else {
+			if($acta->id_modalidad == 5){ // ENTORNO FAMILIAR
+				$html .= "<div class='visitapresencial1'>";
+				$html .= $encabezado;
+				$html .= "<div class='seccion' id='listado_beneficiarios'>
+				<div class='fila center bold'>
+					<div style='border:none; width: 100%'>5. LISTADO DE BENEFICIARIOS ADICIONALES A LOS REPORTADOS EN EL SISTEMA DE INFORMACIÓN DE BUEN COMIENZO</div>
+				</div>
+				<div class='fila colb'>
+					<div style='width: 5%;'>#</div>
+					<div style='width: 15%;'>5.1 DOCUMENTO</div>
+					<div style='width: 30%;'>5.2 NOMBRE COMPLETO</div>
+					<div style='width: 10%;'>5.3 GRUPO</div>
+					<div style='width: 10%;'><span style='font-size: 8px !important;'>5.4 FECHA ENCUENTRO</span></div>
+					<div style='width: 10%;'><span style='font-size: 8px !important;'>5.5 HORA ENCUENTRO</span></div>
+					<div style='width: 10%;'><span style='font-size: 8px !important;'>5.6 TIPO ENCUENTRO</span></div>
+					<div style='width: 10%;'>5.7 ASISTENCIA</div>
+				$fecha_encabezado2</div>";
+				for($i = 1; $i <= 30; $i++){
+					if($acta->id_modalidad == 5){ // ENTORNO FAMILIAR
+						$html .="<div class='fila colb'><div style='width: 5%;'>$i</div><div style='width: 15%;'>&nbsp;</div><div style='width: 30%;'>&nbsp;</div><div style='width: 10%;'>&nbsp;</div><div style='width: 10%;'>&nbsp;</div><div style='width: 10%;'>&nbsp;</div><div style='width: 10%;'>&nbsp;</div><div style='width: 10%;'>&nbsp;</div>$fecha_lista</div>";
+					}
+					else
+					{
+						$html .="<div class='fila colb'><div style='width: 5%;'>$i</div><div style='width: 15%;'>&nbsp;</div><div style='width: 30%;'>&nbsp;</div><div style='width: 30%;'>&nbsp;</div><div style='width: 10%;'>&nbsp;</div>$fecha_lista</div>";
+					}
+				}
+				$p++;
+				$html .= "<div class='clear'></div></div>" . $pie_pagina;
+				$html .= "<div class='paginacion'>PÁGINA $p</div>";
+				$html .= "</div>";
+			}
 		}
 	}
 
@@ -908,18 +1141,24 @@ if($acta->id_modalidad == 12){
 					$('.pie_virtual').css('display', 'block');
 					$('.pie_presencial').css('display', 'none');
 					$('.visitavirtual').css('display', 'flex');
+					$('.visitavirtual1').css('display', 'block');
 					$('.visitapresencial').css('display', 'none');
+					$('.visitapresencial1').css('display', 'none');
 				}else {
 					if (vars['tipovisita'] == 1) {
 						$('.pie_virtual').css('display', 'none');
 						$('.pie_presencial').css('display', 'block');
 						$('.visitavirtual').css('display', 'none');
+						$('.visitavirtual1').css('display', 'none');
 						$('.visitapresencial').css('display', 'flex');
+						$('.visitapresencial1').css('display', 'block');
 					}else {
 						$('.pie_virtual').css('display', 'block');
 						$('.pie_presencial').css('display', 'none');
 						$('.visitavirtual').css('display', 'flex');
+						$('.visitavirtual1').css('display', 'block');
 						$('.visitapresencial').css('display', 'none');
+						$('.visitapresencial1').css('display', 'none');
 					}
 				}
 			}else {

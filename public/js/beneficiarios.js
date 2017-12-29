@@ -55,6 +55,11 @@ $('.asistencia').change(function() {
 				$(this).parent().parent().find("input[name='profesional[]']").attr('placeholder','Profesional');
 				$(this).parent().parent().find(".excusa").removeClass("hidden").addClass("required");
 				$(this).parent().parent().find(".excusa").removeAttr("disabled");
+			}else if (asistencia == 7) {
+				$(this).parent().parent().find("input[name='motivo[]']").attr('placeholder','Tema / Tipo de encuentro');
+				$(this).parent().parent().find("input[name='profesional[]']").attr('placeholder','Acudiente');
+				$(this).parent().parent().find(".excusa").removeClass("hidden").addClass("required");
+				$(this).parent().parent().find(".excusa").removeAttr("disabled");
 			}
 			else
 			{

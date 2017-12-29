@@ -116,6 +116,10 @@
 	height: 270px;
 }
 
+#imprimir .observacion3 {
+	height: 540px;
+}
+
 @media print {
 	#imprimir { display: block; visibility: visible; margin-right: 0.8cm; margin-left: 0.8cm; }
 	.navbar, .no-imprimir, footer, hr { display: none; visibility: hidden; }

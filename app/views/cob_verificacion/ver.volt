@@ -20,7 +20,7 @@
     </thead>
     <tbody>
     {% for acta in actas %}
-    	{% if (nivel <= 1 or (acta.id_usuario == id_usuario or acta.IbcUsuario.id_usuario_lider == id_usuario)) %}
+
         <tr>
         	<td>{{ loop.index }}</td>
             <td>{{ link_to(acta.getUrlDetail(), acta.getIdDetail()) }}</td>
@@ -29,9 +29,9 @@
             <td>{{ acta.id_sede }} - {{ acta.sede_nombre }}</td>
             <td>{{ acta.modalidad_nombre }}</td>
             <td>{{ acta.IbcUsuario.usuario }}</td>
-            <td>{{ acta.getEstadoDetail() }}</td>            
+            <td>{{ acta.getEstadoDetail() }}</td>
         </tr>
-        {% endif %}
+        
     {% endfor %}
     </tbody>
 </table>

@@ -2,6 +2,7 @@
 {{ content() }}
 <h1>Liquidación<br><small>CONTRATO {{ contrato.id_contrato }} MODALIDAD {{ contrato.BcSedeContrato.modalidad_nombre }}</small></h1>
 {{ link_to("bc_reporte/contratos_liquidacion") }}
+<button class='btn btn-primary' id='ExportarExcel'>Exportar</button>
 <table class="table table-bordered table-hover">
 	<thead>
     	 <tr>
@@ -50,3 +51,35 @@
     {% endfor %}
     </tbody>
 </table>
+
+<script>
+	setTimeout(function(){
+		$("#ExportarExcel").click(function(){
+			var Export = [];
+			{% for beneficiario in beneficiarios %}
+				Export.push({
+					"NUMERO_ACTA1": "{{ beneficiario.acta1 }}",
+					"NUMERO_ACTA2": "{{ beneficiario.acta2 }}",
+					"NUMERO_ACTA3": "{{ beneficiario.acta3 }}",
+					"FECHA_REPORTE": "{{ beneficiario.CobPeriodo.fecha }}",
+					"ID_SEDE": "{{ beneficiario.id_sede }}",
+					"NOMBRE_SEDE": "{{ beneficiario.BcSedeContrato.sede_nombre }}",
+					"ID_PERSONA": "{{ beneficiario.id_persona }}",
+					"NUIP": "{{ beneficiario.numDocumento }}",
+					"PRIMER_NOMBRE": "{{ beneficiario.primerNombre }}",
+					"SEGUNDO_NOMBRE": "{{ beneficiario.segundoNombre }}",
+					"PRIMER_APELLIDO": "{{ beneficiario.primerApellido }}",
+					"SEGUNDO_APELLIDO": "{{ beneficiario.segundoApellido }}",
+					"ASISTENCIA1": "{{ beneficiario.asistencia1 }}",
+					"ASISTENCIA2": "{{ beneficiario.asistencia2 }}",
+					"ASISTENCIA3": "{{ beneficiario.asistencia3 }}",
+					"CERTIFICACIÓN_FINAL": "{{ beneficiario.getCertificacionLiquidacion() }}",
+					"OBSERVACIÓN_CERTIFICACION_FINAL": "",
+					"PERIODO": "{{ beneficiario.getPeriodo() }}",
+				})
+			{% endfor %}
+			alasql('SELECT * INTO XLSX("Reporte Liquidación.xlsx",{headers:true}) FROM ?', [Export]);
+		});
+	}, 1000);
+
+</script>

@@ -251,7 +251,7 @@ class CobActaconteoController extends ControllerBase
 		//Eliminar las excusas que ya no tienen clasificación de excusa
 		if( $acta->id_modalidad == 5 )
 		{
-			$db->query("DELETE FROM cob_actaconteo_persona_excusa WHERE id_actaconteo_persona IN (SELECT a.id_actaconteo_persona FROM cob_actaconteo_persona as a, cob_actaconteo as b WHERE a.asistencia != 4 AND a.asistencia != 5 AND a.asistencia != 6 AND a.id_actaconteo = b.id_actaconteo AND b.id_modalidad = $acta->id_modalidad )");
+			$db->query("DELETE FROM cob_actaconteo_persona_excusa WHERE id_actaconteo_persona IN (SELECT a.id_actaconteo_persona FROM cob_actaconteo_persona as a, cob_actaconteo as b WHERE a.asistencia != 4 AND a.asistencia != 5 AND a.asistencia != 6 AND a.asistencia != 7 AND a.id_actaconteo = b.id_actaconteo AND b.id_modalidad = $acta->id_modalidad )");
 		}
 		else
 		{

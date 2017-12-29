@@ -284,6 +284,8 @@ class CobAjusteController extends ControllerBase
     		$this->view->setTemplateAfter('../cob_ajuste/rpt_sedes_itinerante');
     	} else if($tipo == 5) {
     		$this->view->setTemplateAfter('../cob_ajuste/rpt_sedes_jardines');
+    	}elseif ($tipo == 2) {
+    		$this->view->setTemplateAfter('../cob_ajuste/rpt_sedes_familiar');
     	}
     }
 
@@ -306,6 +308,8 @@ class CobAjusteController extends ControllerBase
     		$this->view->setTemplateAfter('../cob_ajuste/rpt_contratos_itinerante');
     	} else if($tipo == 5) {
     		$this->view->setTemplateAfter('../cob_ajuste/rpt_contratos_jardines');
+    	}elseif ($tipo == 2) {
+				$this->view->setTemplateAfter('../cob_ajuste/rpt_contratos_familiar');
     	}
     }
 
